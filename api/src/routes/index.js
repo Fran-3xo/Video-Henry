@@ -15,5 +15,4 @@ router.use ('/user', usuariosRouter);
 router.use('/alumnos', alumnosRouter);
 router.use('/grupos', gruposRouter);
 router.use('/cohortes', cohortesRouter);
-
 module.exports = router;
