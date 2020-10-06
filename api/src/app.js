@@ -26,18 +26,19 @@ passport.use(new GitHubStrategy({
   clientID: GH_ID,
   clientSecret: GH_SECRET,
   callbackURL: "http://localhost:3006/user/github/cb",
+  scope: ["user:email"]
 },async (accessToken, refreshToken, profile, done) =>{
   console.log(profile);
   try{
     const usuario = await Usuario.findOne({
       where: { username: profile.username, active: true },
     })
+    if(!usuario) return done(null, false);
     if(!usuario.provider && !usuario.providerId) {
       usuario.provider = profile.provider;
       usuario.providerId = profile.id;
       await usuario.save();
     }
-    if(!usuario) return done(null, false);
     return done(null, usuario);
   }
   catch(err){

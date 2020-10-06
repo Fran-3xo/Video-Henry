@@ -4,8 +4,11 @@ module.exports = (sequelize) => {
     sequelize.define('usuario', {
         rol : {
             type: DataTypes.ENUM ('alumno', 'instructor', 'pm', 'director'),
-            
             allowNull: false,
+        },
+        username:{
+            type: DataTypes.STRING,
+            allowNull: false
         },
         proceso: {
             type : DataTypes.INTEGER,
