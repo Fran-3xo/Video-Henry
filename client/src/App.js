@@ -27,18 +27,6 @@ function App() {
   const dispatch = useDispatch();
   return (
     <div className="App">
-<<<<<<< HEAD
-        <ThemeProvider theme={theme}>
-      <Route path="/">
-        <NavBar/>
-      </Route>
-      <Route exact path="/">
-        <Login/>
-      </Route>
-      <Route path="/Admin">
-        <Admin/>
-      </Route>
-=======
        <ThemeProvider theme={theme}>
         <Route path="/">
           <NavBar/>
@@ -54,7 +42,6 @@ function App() {
             
           }
         </Route>
->>>>>>> 117c4a812527051b415486218b56bf7a6a5ea74a
       </ThemeProvider>
     </div>
   );
