@@ -9,9 +9,7 @@ export const UserActionTypes = {
 
 export const logIn = () => {
     return (dispatch) => {
-        axios.post ("http://localhost:3006/user/login", {
-            user: req.body.user,
-        },
+        axios.get("http://localhost:3006/user/me",
         {withCredentials: true}
         ).then((res) => dispatch({
             type:UserActionTypes.LOG_IN,
