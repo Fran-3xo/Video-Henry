@@ -1,13 +1,11 @@
-.menu{
+.admin{
     display: flex;
-    flex-direction: column;
+    margin-top: 5rem;
+}
+.menu{
     text-align: left;
     position: absolute;
     left: 0;
-    width: 30%;
-}
-.links{
-    padding: 1rem;
-    color: black;
-    text-decoration: none;
+    width: 10%;
+
 }

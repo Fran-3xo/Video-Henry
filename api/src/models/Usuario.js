@@ -25,9 +25,5 @@ module.exports = (sequelize) => {
             allowNull: false,
             defaultValues: true
         },
-        image:{
-            type: DataTypes.TEXT,
-            allowNull: true,
-        }
     })
 }

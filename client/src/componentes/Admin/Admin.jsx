@@ -1,17 +1,25 @@
 import React, { useState } from 'react';
 import styles from "./admin.module.css";
 import { Link, useRouteMatch, Route } from 'react-router-dom';
+import { List, ListItem, ListSubheader, ListItemText } from '@material-ui/core'
+import Clase from "./Clase/Clase";
 export default function Admin(){
     const match = useRouteMatch();
     return(
         <div className={styles.admin}>
-            <div className={styles.menu}>
-                <Link className={styles.links} to={`${match.url}/Clases`}>Clases</Link>
-                <Link className={styles.links} to={`${match.url}/Cohortes`}>Cohortes</Link>
-                <Link className={styles.links} to={`${match.url}/Modulos`}>Modulos</Link>
-            </div>
+            <List subheader={<ListSubheader>Administración</ListSubheader>} className={styles.menu}>
+                <ListItem button component={Link} to={`${match.url}/Clases`}>
+                    <ListItemText>Clases</ListItemText>
+                </ListItem>
+                <ListItem button component={Link} to={`${match.url}/Cohortes`}>
+                    <ListItemText>Cohortes</ListItemText>
+                </ListItem>
+                <ListItem button component={Link} to={`${match.url}/Modulos`}>
+                    <ListItemText>Modulos</ListItemText>
+                </ListItem>
+            </List>
             <Route exact path={`${match.path}/Clases`}>
-                <h1>Clases</h1>
+                <Clase/>
             </Route>
             <Route exact path={`${match.path}/Cohortes`}>
                 <h1>Cohortes</h1>

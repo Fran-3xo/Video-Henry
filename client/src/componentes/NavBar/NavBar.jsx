@@ -43,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
   };
   return (
     <div className={classes.root}>
-      <AppBar position="static">
+      <AppBar position="fixed">
         <Toolbar className={s.color}>
           
           <Typography variant="h6" className={classes.title + " " + s.letras + " " + s.espacio}>

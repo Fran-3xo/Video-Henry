@@ -27,6 +27,10 @@ const useStyles = makeStyles((theme) => ({
     },
     submit: {
         margin: theme.spacing(3, 0, 2),
+        marginLeft: "8px",
+        backgroundColor: "#ffff00",
+        color: "#000000",
+        
     },
     root: {
         '& > *': {
@@ -44,13 +48,10 @@ export default function Form () {
     return (
         <div>
             <Container component="main" maxWidth="xs">
-                <Typography component="h1" variant="h5">
-                    Agregar un nuevo video
-                </Typography>
                 <form className={classes.form} noValidate>
-                    <TextField color='secondary'
+                    <TextField  
                                 type='text'
-                                color='secondary'
+                                color="primary"
                                 name="clase"
                                 variant="outlined"
                                 required
@@ -59,9 +60,9 @@ export default function Form () {
                                 autoFocus
                                 className={s.margin}
                     />
-                        <TextField color='secondary'
+                        <TextField 
                                 type='text'
-                                color='secondary'
+                                color="primary"
                                 name="link"
                                 variant="outlined"
                                 required
@@ -70,9 +71,9 @@ export default function Form () {
                                 autoFocus
                                 className={s.margin}
                     />
-                        <TextField color='secondary'
+                        <TextField 
                                 type='text'
-                                color='secondary'
+                                color="primary"
                                 name="modulo"
                                 variant="outlined"
                                 required
@@ -85,7 +86,6 @@ export default function Form () {
                                 type="submit"
                                 fullWidth
                                 variant="contained"
-                                color="primary"
                                 className={classes.submit}
                             >
                             Agregar video
