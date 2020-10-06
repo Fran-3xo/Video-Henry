@@ -4,7 +4,7 @@ import {Route} from "react-router-dom";
 import NavBar from "./componentes/NavBar/NavBar";
 import Admin from "./componentes/Admin/Admin";
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
-
+import Login from "./componentes/Login/login";
 const theme = createMuiTheme({
   palette: {
     primary: {
@@ -27,6 +27,9 @@ function App() {
         <ThemeProvider theme={theme}>
       <Route path="/">
         <NavBar/>
+      </Route>
+      <Route exact path="/">
+        <Login/>
       </Route>
       <Route path="/Admin">
         <Admin/>
