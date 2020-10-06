@@ -18,10 +18,15 @@
 //                       `=---='
 //     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 const server = require('./src/app.js');
-const { conn } = require('./src/db.js');
-
+const { conn, Usuario } = require('./src/db.js');
+require('dotenv').config();
 // Syncing all the models at once.
 conn.sync({ force: true }).then(() => {
+  Usuario.create({
+    username: process.env.USER_ADMIN,
+    rol: "director",
+    active: true,
+  })
   server.listen(3006, () => {
     console.log('%s listening at 3006'); // eslint-disable-line no-console
   });
