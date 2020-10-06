@@ -1,24 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Typography, Grid, Container } from '@material-ui/core'
 import { useSelector, useDispatch } from 'react-redux';
-import { getClases } from '../../store/actions/clases';
 import { useParams } from 'react-router-dom';
 import useStyles from './Modulo.styles'
-import { Redirect } from 'react-router';
 import axios from "axios";
 export default function Modulo(props) {
     const [video, setVideo] = useState()
     const [nombreVideo, setNombreVideo] = useState('Introduccion')
-    const [redirect, setRedirect] = useState(false)
     const classes = useStyles();
     const { modulo } = useParams();
     const dispatch = useDispatch();
-    const modulos = useSelector((state) => state.clases.clases);
-
-    console.log(modulo)
-    useEffect(() => {
+    const modulos = [];//useSelector((state) => state.clases.clases);
+   /*  useEffect(() => {
         dispatch(getClases(modulo))
-    }, [modulo])
+    }, [modulo] )*/
     useEffect(() => {
         if (!!modulos.length) {
             let init = modulos.filter(m => m.modulo === modulo && m.clase.slice(0, 1) === '1');
@@ -34,10 +29,6 @@ export default function Modulo(props) {
             .catch(err => console.log(err))
         setNombreVideo(video.clase)
     };
-    if (redirect) {
-        return <Redirect to="/Home" />;
-    }
-
     return (
         <div className={classes.contenedor}>
             <Typography variant="h2">
@@ -55,10 +46,6 @@ export default function Modulo(props) {
                         )}
                     </Grid>
                 </Container>
-
-                <Button variant="contained" className={classes.botonRegresar} onClick={setRedirect} >
-                    Regresar
-                    </Button>
             </div>
         </div>
 

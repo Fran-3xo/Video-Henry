@@ -1,38 +1,12 @@
 const {DataTypes} = require ("sequelize")
 
 module.exports = (sequelize) => {
-    const User = sequelize.define('usuario', {
-        email : {
-            type: DataTypes.STRING,
-            allowNull: false,
-            unique: true
-        },
-        nombre : {
-            type: DataTypes.STRING,
-            allowNull : true,
-        },
-        apellido : {
-            type: DataTypes.STRING,
-            allowNull: true
-        },
+    sequelize.define('usuario', {
         rol : {
             type: DataTypes.ENUM ('alumno', 'instructor', 'pm', 'director'),
             
             allowNull: false,
         },
-        password : {
-        type: DataTypes.STRING,
-        allowNull: true,
-        },
-        edad : {
-            type: DataTypes.INTEGER,
-            allowNull: true
-        },
-        localidad : {
-            type: DataTypes.STRING,
-            allowNull: true
-        },
-        //proceso de carrera
         proceso: {
             type : DataTypes.INTEGER,
             defaultValues : 1,
@@ -43,10 +17,6 @@ module.exports = (sequelize) => {
             allowNull: true
         },
         providerId: {
-            type: DataTypes.STRING,
-            allowNull: true
-        },
-        salt : {
             type: DataTypes.STRING,
             allowNull: true
         },
