@@ -14,6 +14,11 @@
     "node": ">=12.18.3",
     "npm": ">=6.14.6"
   },
+  "scripts": {
+    "start": "nodemon -L",
+    "forever": "forever index.js",
+    "test": "mocha -w ./tests/**/*.spec.js"
+  },
   "dependencies": {
     "body-parser": "^1.19.0",
     "connect-session-sequelize": "^7.0.3",
