@@ -1,4 +1,4 @@
-import { UserActionTypes } from '../actions/user';
+import { UserActionTypes } from '../actions/login';
 
 //ESTE REDUCER ES UNA PRUEBA DE REDUX
 const initialState = {
