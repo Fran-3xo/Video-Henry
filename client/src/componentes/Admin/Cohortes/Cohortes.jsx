@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, Route, useHistory, useRouteMatch } from 'react-router-dom'
 import s from "./grupoPm.module.css"
 import { connect, useSelector, useDispatch } from 'react-redux';
-import { getCohorte } from "../../../actions/cohorte"
+import {getCohorte} from "../../../store/actions/cohorte"
 import { Button } from '@material-ui/core';
 
 export default function Cohortes(props) {
@@ -24,8 +24,11 @@ export default function Cohortes(props) {
 
 
     return (
-        <div style={{ display: 'flex' }} >
+        <div className= {s.all}>
+                
             <div className={s.container + " " + s.margin}>
+                <h2 className={s.titulo}>Cohortes</h2>
+                <Button variant= "contained" className={s.buttons}>+</Button>
                 {cohorte && cohorte.map((cohorte) => (
                 <Button>{cohorte.nombre}</Button>
                 ))}
