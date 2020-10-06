@@ -1,6 +1,5 @@
 const server = require("express").Router();
 const {Cohorte} = require("../db");
-const moment = require("moment")
 //trae todos los cohortes
 server.get("/", (req, res, next) =>{
     Cohorte.findAll()

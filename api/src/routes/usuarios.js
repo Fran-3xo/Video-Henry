@@ -4,68 +4,6 @@ const passport = require('passport');
 const crypto = require("crypto");
 //crear usuario
 //http://localhost:3006/user/
-server.post('/', async(req, res, next) => {
-		const salt = crypto.randomBytes(64).toString("hex");
-		try {
-			const {email, password,apellido,nombre, rol,proceso, active, pairId, grupoId, cohorteId,localidad,edad, image} = req.body;
-			const passwordHash = crypto.pbkdf2Sync(password, salt, 10000, 64, "sha512").toString("base64");
-			 const user = await Usuario.update({
-				nombre,
-				apellido,
-				password: passwordHash,
-				rol: "alumno",
-				proceso: "1",
-				salt,
-				active,
-				pairId,
-				cohorteId,
-				grupoId,
-				localidad,
-				edad,
-				image
-			},
-			{where : {email}}
-			);
-			 if (user) {
-				passport.authenticate("local", function (err, user, info) {
-					if (err) {
-						return next(err);
-					}
-					if (!user) {
-						return res.status(401).json({ status: "error", message: info.message });
-					}
-					req.login(user, function (err) {
-						if (err) {
-							return next(err);
-						}
-						return res.json({ status: "ok", user: req.user, isAuth: req.isAuthenticated() });
-					});
-				})(req, res, next);
-			}
-		} catch (err) {
-			console.log({ err });
-			return res.status(500).json({ status: "error", message: "Error, el email ya existe.", input: "email", err });
-		}
-});
-//login de un usuario
-server.post("/login", async (req, res, next) =>{
-	if(req.isAuthenticated()) return res.json({ status: "ok", user: req.user, isAuth: true });
-	passport.authenticate("local", function (err, user, info) {
-		if (err) {
-			return next(err);
-		}
-		if (!user) {
-			return res.status(401).json({ status: "error", message: info.message, input: info.input });
-		}
-		req.login(user, function (err) {
-			if (err) {
-				return next(err);
-			}
-			console.log(req.session)
-			return res.json({ status: "ok", user, isAuth: req.isAuthenticated() });
-		});
-	})(req, res, next);
-});
 server.get("/github/login", passport.authenticate("github", { scope: ["user:email"] }));
 server.get("/github/cb", passport.authenticate("github", { failureRedirect: 'http://localhost:3000/failure_login' }), (req, res) => {
 	res.redirect("http://localhost:3000/github_login");
@@ -116,19 +54,6 @@ server.put('/update/:id', (req, res) => {
 });
 
 //cambio de password
-server.put('/repassword', (req, res, next) =>{
-	const passwordHash = crypto.pbkdf2Sync(req.body.password, req.user.salt, 10000, 64, "sha512").toString("base64");
-	if(passwordHash !== req.user.password) return res.sendStatus(401);
-	const newSalt = crypto.randomBytes(64).toString("hex");
-	const newPasswordHash = crypto.pbkdf2Sync(req.body.newPass, newSalt, 10000, 64, "sha512").toString("base64");
-	Usuario.update({
-		password: newPasswordHash,
-		salt: newSalt
-	},{ where:{ id: req.user.id } })
-		.then(usuario  => res.json(usuario))
-		.catch(err => next(err));
-})
-//borra usuario
 server.put('/:id/delete', (req,res)=>{
 	const id= req.params.id
 	Usuario.update({
