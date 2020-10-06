@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import styles from "./admin.module.css";
 import { Link, useRouteMatch, Route } from 'react-router-dom';
 import { List, ListItem, ListSubheader, ListItemText } from '@material-ui/core'
+import Cohortes from "./Cohortes/Cohortes"
+import Modulos from "../Alumnos/modulo-alumno"
 import Clase from "./Clase/Clase";
 export default function Admin(){
     const match = useRouteMatch();
@@ -22,10 +24,10 @@ export default function Admin(){
                 <Clase/>
             </Route>
             <Route exact path={`${match.path}/Cohortes`}>
-                <h1>Cohortes</h1>
+                <Cohortes/>
             </Route>
             <Route exact path={`${match.path}/Modulos`}>
-                <h1>Modulos</h1>
+                <Modulos />
             </Route>
         </div>
     );
