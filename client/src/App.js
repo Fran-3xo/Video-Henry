@@ -5,10 +5,11 @@ import NavBar from "./componentes/NavBar/NavBar";
 import Admin from "./componentes/Admin/Admin";
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import Login from "./componentes/Login/login";
+import Alumno from "./componentes/Alumnos/modulo-alumno"
 const theme = createMuiTheme({
   palette: {
     primary: {
-      main: 'rgb(86 85 85 1)',
+      main: 'rgb(255 255 0 1)',
     },
     secondary: {
       main: 'rgb(0 0 0)',
