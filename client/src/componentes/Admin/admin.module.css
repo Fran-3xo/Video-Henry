@@ -1,0 +1,9 @@
+.admin{
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+.links{
+    padding: 1rem;
+    color: black;
+}
