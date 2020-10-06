@@ -5,6 +5,8 @@ import NavBar from "./componentes/NavBar/NavBar";
 import Admin from "./componentes/Admin/Admin";
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import Login from "./componentes/Login/login";
+import axios from "axios";
+import {useDispatch} from "react-redux";
 const theme = createMuiTheme({
   palette: {
     primary: {
@@ -22,8 +24,10 @@ const theme = createMuiTheme({
   }
 });
 function App() {
+  const dispatch = useDispatch();
   return (
     <div className="App">
+<<<<<<< HEAD
         <ThemeProvider theme={theme}>
       <Route path="/">
         <NavBar/>
@@ -34,6 +38,23 @@ function App() {
       <Route path="/Admin">
         <Admin/>
       </Route>
+=======
+       <ThemeProvider theme={theme}>
+        <Route path="/">
+          <NavBar/>
+        </Route>
+        <Route exact path="/">
+          <Login/>
+        </Route>
+        <Route path="/Admin">
+          <Admin/>
+        </Route>
+        <Route exact path="/github_login">
+          {
+            
+          }
+        </Route>
+>>>>>>> 117c4a812527051b415486218b56bf7a6a5ea74a
       </ThemeProvider>
     </div>
   );
