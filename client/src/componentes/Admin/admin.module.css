@@ -1,9 +1,11 @@
 .admin{
     display: flex;
-    flex-direction: column;
-    text-align: left;
+    margin-top: 5rem;
 }
-.links{
-    padding: 1rem;
-    color: black;
+.menu{
+    text-align: left;
+    position: absolute;
+    left: 0;
+    width: 10%;
+
 }

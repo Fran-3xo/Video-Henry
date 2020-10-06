@@ -3,7 +3,6 @@ import './App.css';
 import {Route} from "react-router-dom";
 import NavBar from "./componentes/NavBar/NavBar";
 import Admin from "./componentes/Admin/Admin";
-import Form from "./componentes/Form/form"
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
 const theme = createMuiTheme({
@@ -29,11 +28,8 @@ function App() {
       <Route path="/">
         <NavBar/>
       </Route>
-      <Route exact path="/Admin">
+      <Route path="/Admin">
         <Admin/>
-      </Route>
-      <Route path="/form">
-        <Form/>
       </Route>
       </ThemeProvider>
     </div>

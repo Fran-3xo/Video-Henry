@@ -32,6 +32,11 @@ passport.use(new GitHubStrategy({
     const usuario = await Usuario.findOne({
       where: { username: profile.username, active: true },
     })
+    if(!usuario.provider && !usuario.providerId) {
+      usuario.provider = profile.provider;
+      usuario.providerId = profile.id;
+      await usuario.save();
+    }
     if(!usuario) return done(null, false);
     return done(null, usuario);
   }

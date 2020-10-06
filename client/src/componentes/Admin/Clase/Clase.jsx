@@ -48,9 +48,6 @@ export default function Form () {
     return (
         <div>
             <Container component="main" maxWidth="xs">
-                <Typography component="h1" variant="h5">
-                    Agregar un nuevo video
-                </Typography>
                 <form className={classes.form} noValidate>
                     <TextField  
                                 type='text'
