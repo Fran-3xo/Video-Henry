@@ -19,10 +19,20 @@
     border: solid 2px black;
 
 }
+.button {
+    margin-left: 8px;
+    background-color: yellow;
+    color: black;
+}
 
 .inputs{
     display: flex;
     justify-content: flex-start;
+}
+.form {
+    width: 100%;
+    
+
 }
 
 .margin{
