@@ -3,10 +3,8 @@ import thunk from 'redux-thunk'
 import { rootReducer } from './reducers/index';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-const initialState = JSON.parse(localStorage.getItem("user")) || {};
 const store = createStore(
     rootReducer,
-    initialState,
     composeEnhancers(applyMiddleware(
         thunk))
 );

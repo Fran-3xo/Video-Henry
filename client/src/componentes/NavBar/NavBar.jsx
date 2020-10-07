@@ -6,13 +6,12 @@ import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';  
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
-import MenuIcon from '@material-ui/icons/Menu';
-import AccountCircle from '@material-ui/icons/AccountCircle';
-import {useDispatch} from 'react-redux';
+import {AccountCircle, ExitToApp} from '@material-ui/icons';
+import {useDispatch, useSelector} from 'react-redux';
+import {logOut} from '../../store/actions/login';
 const useStyles = makeStyles((theme) => ({
   formControl: {
     margin: theme.spacing(1),
@@ -29,13 +28,12 @@ const useStyles = makeStyles((theme) => ({
  export default function ButtonAppBar(props) {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);
-  const [auth, setAuth] = useState(true);
+  const dispatch = useDispatch();
+  const {user: {user}} = useSelector(state => state);
   const open = Boolean(anchorEl);
-  const handleClose = () => {
+  const handleLog = () => {
     setAnchorEl(null);
-  };
-  const handleChange = (event) => {
-    setAuth(event.target.checked);
+    dispatch(logOut());
   };
 
   const handleMenu = (event) => {
@@ -49,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
           <Typography variant="h6" className={classes.title + " " + s.letras + " " + s.espacio}>
             <Link to="/Home"> <img src={imagen} alt="" className={s.imagen}/> </Link> 
           </Typography>
-         {auth && (
+         {!!user && (
             <div  className={s.user}>
               <IconButton
                 aria-label="account  of current user"
@@ -57,7 +55,6 @@ const useStyles = makeStyles((theme) => ({
                 aria-haspopup="true"
                 onClick={handleMenu}
                 color="inherit"
-               
               >
                 <AccountCircle />
               </IconButton>
@@ -74,12 +71,14 @@ const useStyles = makeStyles((theme) => ({
                   horizontal: 'right',
                 }}
                 open={open}
-                onClose={handleClose}
+                onClose={() => setAnchorEl(null)}
               >
                 <MenuItem onClick={() =>{
-                  handleClose();
-                }}> Logout</MenuItem>
-                
+                  handleLog();
+                }}>
+                  <ExitToApp/> Logout
+                </MenuItem>
+                {(user.rol==="director" || user.rol==="instructor") && <MenuItem component={Link} to="/Admin">Administración</MenuItem>}
               </Menu>
             </div>
           )}
