@@ -35,9 +35,6 @@ export default function Cohortes(props) {
                 <Button component= {Link} to= {`${match.url}/${cohorte.id}`}>{cohorte.nombre}</Button>
                 ))}
             </div>
-
-            {/* RenderTable > 0 && <AddAlumno id={RenderTable} /> */}
-            
             <Route exact path={`${match.path}/agregar`}>
                 <FormCohorte />
             </Route>
