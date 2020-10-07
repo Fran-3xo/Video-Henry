@@ -5,6 +5,7 @@ import { List, ListItem, ListSubheader, ListItemText } from '@material-ui/core'
 import Cohortes from "./Cohortes/Cohortes"
 import Modulos from "../Alumnos/modulo-alumno"
 import Clase from "./Clase/Clase";
+import CohorteModulo from "../Alumnos/cohorte-modulo"
 export default function Admin(){
     const match = useRouteMatch();
     return(
@@ -26,8 +27,8 @@ export default function Admin(){
             <Route path={`${match.path}/Cohortes`}>
                 <Cohortes/>
             </Route>
-            <Route exact path={`${match.path}/Modulos`}>
-                <Modulos />
+            <Route  path={`${match.path}/Modulos`}>
+                <CohorteModulo />
             </Route>
         </div>
     );

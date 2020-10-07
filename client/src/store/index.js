@@ -3,9 +3,11 @@ import thunk from 'redux-thunk'
 import { rootReducer } from './reducers/index';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-const user = eval(localStorage.getItem("user")) || null;
+const user = localStorage.getItem("user");
 const initialState = {
-    user : JSON.parse(user) || "",
+    user : {
+        user : JSON.parse(user)
+    }
 }
 const store = createStore(
     rootReducer,

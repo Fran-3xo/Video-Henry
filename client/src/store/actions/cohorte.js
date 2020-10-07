@@ -9,7 +9,7 @@ export const setCohorte = (data) => {
     return (dispatch) => {
         axios
             .post(`http://localhost:3006/cohortes/nuevo`, {
-                fecha: data.fecha,
+                
                 nombre: data.nombre
             })
             .then((cohorte) => {
@@ -17,6 +17,7 @@ export const setCohorte = (data) => {
                     type: CohorteActionTypes.SET_COHORTE,
                     payload: cohorte.data
                 })
+                dispatch(getCohorte())
             }).catch(err => console.log(err));
         };
     };

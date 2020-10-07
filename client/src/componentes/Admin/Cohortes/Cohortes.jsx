@@ -28,11 +28,11 @@ export default function Cohortes(props) {
     return (
         <div className= {s.all}>
                 
-            <div className={s.container + " " + s.margin}>
+            <div>
                 <h2 className={s.titulo}>Cohortes</h2>
                 <Button variant= "contained" className={s.buttons} component={Link} to= {`${match.url}/agregar`}>+</Button>
                 {cohorte && cohorte.map((cohorte) => (
-                <Button component= {Link} to= {`${match.url}/${cohorte.id}`}>{cohorte.nombre}</Button>
+                <Button component= {Link} to= {`${match.url}/alumnos/${cohorte.id}`} className={s.buttons}>{cohorte.nombre}</Button>
                 ))}
             </div>
             <Route exact path={`${match.path}/agregar`}>

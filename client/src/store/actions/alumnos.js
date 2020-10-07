@@ -32,7 +32,7 @@ export const alumnosActionTypes = {
             .catch(err => console.log(err))
         }
     }
-
+//le cambia el proceso a un alumno
     export const procesoAlumno = ({proceso}) => {
         return dispatch => {
             return axios.put ("http://localhost:3006/alumnos/modulo", {
@@ -42,7 +42,7 @@ export const alumnosActionTypes = {
             .catch(err => console.log(err))
         }
     }
-
+    //trae los alumnos por modulo
     export const getAlumnoModulo = (id) => {
         return dispatch => {
             return axios.get(`http://localhost:3006/alumnos/${id}`,{withCredentials: true})
