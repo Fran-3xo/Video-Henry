@@ -40,7 +40,7 @@ function App() {
   },[user])
   return (
     <div className="App">
-       <ThemeProvider theme={theme}>
+      <ThemeProvider theme={theme}>
         <Route path="/">
           <NavBar/>
         </Route>
