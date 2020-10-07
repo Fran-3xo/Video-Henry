@@ -1,12 +1,12 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import './App.css';
-import {Route} from "react-router-dom";
+import {Route, Redirect, useHistory} from "react-router-dom";
 import NavBar from "./componentes/NavBar/NavBar";
 import Admin from "./componentes/Admin/Admin";
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import Login from "./componentes/Login/login";
-import axios from "axios";
-import {useDispatch} from "react-redux";
+import {logIn} from "./store/actions/login";
+import {useDispatch, useSelector} from "react-redux";
 const theme = createMuiTheme({
   palette: {
     primary: {
@@ -23,8 +23,21 @@ const theme = createMuiTheme({
     }
   }
 });
-function App() {
+const GithubLogin = () => {
   const dispatch = useDispatch();
+  const history = useHistory();
+  useEffect(()=>{
+    dispatch(logIn())
+      .then(() => history.push("/Home"))
+      .catch(() => history.push("/"))
+  },[])
+  return(<></>)
+}
+function App() {
+  const {user:{user}} = useSelector(store => store);
+  useEffect(()=>{
+    localStorage.setItem("user", JSON.stringify(user));
+  },[user])
   return (
     <div className="App">
        <ThemeProvider theme={theme}>
@@ -35,12 +48,16 @@ function App() {
           <Login/>
         </Route>
         <Route path="/Admin">
-          <Admin/>
+          {!!user && user.rol==="director"?<Admin/>:<Redirect to="/"/>}
         </Route>
         <Route exact path="/github_login">
-          {
-            
-          }
+          <GithubLogin/>
+        </Route>
+        <Route exact path="/failure_login">
+          <h1>Usuario NO autarizado</h1>
+        </Route>
+        <Route exact path="/Home">
+          <h1>Home</h1>  
         </Route>
       </ThemeProvider>
     </div>

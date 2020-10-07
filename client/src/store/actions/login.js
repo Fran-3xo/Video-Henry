@@ -9,12 +9,12 @@ export const UserActionTypes = {
 
 export const logIn = () => {
     return (dispatch) => {
-        axios.get("http://localhost:3006/user/me",
+        return axios.get("http://localhost:3006/user/me",
         {withCredentials: true}
         ).then((res) => dispatch({
             type:UserActionTypes.LOG_IN,
             payload: res.data
-        }))
+        })).catch(err => console.log(err));
     }
 }
 export const logOut = () =>{
