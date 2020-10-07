@@ -36,7 +36,7 @@ const GithubLogin = () => {
 function App() {
   const {user:{user}} = useSelector(store => store);
   useEffect(()=>{
-    localStorage.setItem("user", JSON.stringify(user));
+    localStorage.setItem("user", !!user?JSON.stringify(user):JSON.stringify(""));
   },[user])
   return (
     <div className="App">

@@ -27,7 +27,7 @@ export default function Admin(){
             <Route path={`${match.path}/Cohortes`}>
                 <Cohortes/>
             </Route>
-            <Route exact path={`${match.path}/Modulos`}>
+            <Route  path={`${match.path}/Modulos`}>
                 <CohorteModulo />
             </Route>
         </div>

@@ -25,8 +25,8 @@ server.get("/:id", (req, res, next) =>{
 
 //crea un nuevo cohorte
 server.post("/nuevo", (req, res, next) =>{
-     Cohorte.create({
-        fecha: req.body.fecha, 
+        Cohorte.create({
+        
         nombre: req.body.nombre
     }).then(cohorte => res.json(cohorte))
         .catch(err => next(err));

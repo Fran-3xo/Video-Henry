@@ -17,7 +17,7 @@ module.exports = (sequelize) => {
         },
         fecha : {
             type: DataTypes.DATE,
-            allowNull: false,
+            allowNull: true,
             get(){
 				return moment.utc(this.getDataValue("fecha")).format("DD/MM/YYYY");
             }
