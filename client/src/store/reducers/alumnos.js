@@ -3,29 +3,21 @@ import { alumnosActionTypes } from '../actions/alumnos.js';
 
 const initialState = {
     alumnos_cohorte: [],
-    alumnos_modulo: []
+    alumnos_modulo: [],
+    alumnos: []
 };
 
 export const alumnosReducer = (state = initialState, action) => {
     switch (action.type) {
-        case alumnosActionTypes.GET_ALUMNOS_COHORTE:
+        case alumnosActionTypes.GET_ALUMNOS:
             return {
                 ...state,
-                alumnos_cohorte: action.payload,
+                alumnos: action.payload,
             }
-                    case alumnosActionTypes.PUT_USER_COHORTE:
-                        return {
-                            ...state,
-                        }
-                        case alumnosActionTypes.PUT_MODULO:
-                            return {
-                                ...state,
-                            }
-                        case alumnosActionTypes.GET_ALUMNOS_MODULO:
-                            return {
-                                ...state,
-                                alumnos_modulo: action.payload
-                            }
+            case alumnosActionTypes.POST_ALUMNO:
+                return {
+                    ...state,
+                }
         default:
             return state
     }

@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import styles from "./admin.module.css";
 import { Link, useRouteMatch, Route } from 'react-router-dom';
 import { List, ListItem, ListSubheader, ListItemText } from '@material-ui/core'
-import Cohortes from "./Cohortes/Cohortes"
-import Modulos from "../Alumnos/modulo-alumno"
+import AddAlumno from "../Alumnos/AddAlumno"
 import Clase from "./Clase/Clase";
-import CohorteModulo from "../Alumnos/cohorte-modulo"
+import { TablaAlumnos } from '../Alumnos/TablaAlumnos';
+
 export default function Admin(){
     const match = useRouteMatch();
     return(
@@ -14,21 +14,16 @@ export default function Admin(){
                 <ListItem button component={Link} to={`${match.url}/Clases`}>
                     <ListItemText>Clases</ListItemText>
                 </ListItem>
-                <ListItem button component={Link} to={`${match.url}/Cohortes`}>
-                    <ListItemText>Cohortes</ListItemText>
-                </ListItem>
-                <ListItem button component={Link} to={`${match.url}/Modulos`}>
-                    <ListItemText>Modulos</ListItemText>
+                <ListItem button component={Link} to={`${match.url}/agregar`}>
+                    <ListItemText>Alumnos</ListItemText>
                 </ListItem>
             </List>
             <Route exact path={`${match.path}/Clases`}>
                 <Clase/>
             </Route>
-            <Route path={`${match.path}/Cohortes`}>
-                <Cohortes/>
-            </Route>
-            <Route  path={`${match.path}/Modulos`}>
-                <CohorteModulo />
+            <Route path={`${match.path}/agregar`}>
+                <AddAlumno/>
+                <TablaAlumnos/>
             </Route>
         </div>
     );
