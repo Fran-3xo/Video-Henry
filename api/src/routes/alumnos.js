@@ -125,26 +125,23 @@ server.post('/agregar', (req, res, next) => {
     Promise.all(addEmails).then(() => res.send('OK'))
     .catch( err => next(err))
 })
-//trae todos los grupos pm de un cohorte
-server.get ("/grupopm/:cohorte", (req,res,next) => {
-    Grupo.findAll({
-        where : {
-            "$cohorte.id$": req.params.cohorte
-        },
-        include: {
-            model : Cohorte,
-            as : "cohorte"
-        }
-    }).then(grupo => res.json(grupo))
+
+//le cambia el proceso a un alumno
+server.put("/modulo" , (req,res,next) => {
+    Usuario.findByPk(req.body.usuarioId)
+    .then(usuario => {usuario.proceso = req.body.proceso;
+    return usuario.save()
+    }).then(usuario => res.json(usuario))
     .catch(err => next(err))
 })
-//actualiza grupo pp de un alumno
-server.put("/pair/agregar", (req, res, next) =>{
-    Usuario.findByPk(req.body.usuarioId)
-.then(usuario => {usuario.pairId = req.body.pairId;
-return usuario.save()
-}).then(usuario => res.json(usuario))
-    .catch(err => next(err));
-})
+//trae los alumnos de un modulo
+server.get("/:proceso", (req, res, next) =>{
+    Usuario.findAll({
+        where:{
+            proceso: req.params.proceso,
+        }
+    }).then(usuario => res.json(usuario))
+        .catch(err => next(err));
+});
 
 module.exports = server;

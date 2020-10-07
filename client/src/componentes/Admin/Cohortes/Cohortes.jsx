@@ -4,6 +4,8 @@ import s from "./grupoPm.module.css"
 import { connect, useSelector, useDispatch } from 'react-redux';
 import {getCohorte} from "../../../store/actions/cohorte"
 import { Button } from '@material-ui/core';
+import FormCohorte from "./form_cohorte"
+import TablaAlumnosCohorte from "./Alumnos_cohorte"
 
 export default function Cohortes(props) {
     const dispatch = useDispatch();
@@ -28,14 +30,20 @@ export default function Cohortes(props) {
                 
             <div className={s.container + " " + s.margin}>
                 <h2 className={s.titulo}>Cohortes</h2>
-                <Button variant= "contained" className={s.buttons}>+</Button>
+                <Button variant= "contained" className={s.buttons} component={Link} to= {`${match.url}/agregar`}>+</Button>
                 {cohorte && cohorte.map((cohorte) => (
-                <Button>{cohorte.nombre}</Button>
+                <Button component= {Link} to= {`${match.url}/${cohorte.id}`}>{cohorte.nombre}</Button>
                 ))}
             </div>
+
             {/* RenderTable > 0 && <AddAlumno id={RenderTable} /> */}
             
-            {/* <Route exact path={`${match.path}/:id`} render={({match}) => <AddAlumno id={match.params.id} />}/> */}
+            <Route exact path={`${match.path}/agregar`}>
+                <FormCohorte />
+            </Route>
+            <Route exact path ={`${match.path}/alumnos/:cohorteId`}>
+                    <TablaAlumnosCohorte />
+            </Route>
         </div>
     );
 }

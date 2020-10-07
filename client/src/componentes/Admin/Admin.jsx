@@ -23,7 +23,7 @@ export default function Admin(){
             <Route exact path={`${match.path}/Clases`}>
                 <Clase/>
             </Route>
-            <Route exact path={`${match.path}/Cohortes`}>
+            <Route path={`${match.path}/Cohortes`}>
                 <Cohortes/>
             </Route>
             <Route exact path={`${match.path}/Modulos`}>
