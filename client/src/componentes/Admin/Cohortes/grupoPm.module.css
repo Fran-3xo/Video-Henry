@@ -1,6 +1,5 @@
 .all {
     display: flex;
-    flex-direction: column;
 }
 .container {
     height: 300px;
