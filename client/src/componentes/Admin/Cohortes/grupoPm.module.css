@@ -1,0 +1,26 @@
+.all {
+    display: flex;
+    flex-direction: column;
+}
+.container {
+    height: 300px;
+    max-height: none;
+    margin-right: 20px;
+    margin-bottom: 68px;
+    width: 300px;
+    border: solid 2px black;
+    border-radius: 10px;    
+}
+
+.margin {
+    margin-right: 30px;
+}
+.titulo {
+    margin-top: auto;
+}
+
+.buttons  {
+    width: 20px !important;
+    height: 30px !important;
+    background-color: yellow !important;
+}
