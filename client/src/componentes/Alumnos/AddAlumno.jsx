@@ -1,17 +1,17 @@
 import React, { useState } from "react";
 import axios from 'axios';
-import {useDispatch } from 'react-redux';
-import s from "../Clase/registrarse.module.css"
+import s from "./registrarse.module.css"
 import { Button, CssBaseline, TextField, FormHelperText } from '@material-ui/core';
 import Link from '@material-ui/core/Link';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import { IconButton } from '@material-ui/core';
+import { IconButton, Chip } from '@material-ui/core';
 import { useHistory } from "react-router-dom";
-import {setCohorte} from "../../../store/actions/cohorte"
-import { cohorteReducer } from "../../../store/reducers/cohorte";
+import {postAlumno} from "../../store/actions/alumnos"
+import {useDispatch} from "react-redux";
+
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -45,47 +45,55 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-
-
-
-export default function FormCohorte () {
+export default function AddAlumno () {
     const dispatch = useDispatch();
     const classes = useStyles();
-    const [cohorte, setNombre] = useState();
-
-    const handleSubmit = () => {
-        dispatch(setCohorte({
-            nombre: cohorte
-        }))
+    const [alumnos, setAlumnos] = useState("");
+    const regex = /^[a-z\d](?:[a-z\d]|-(?=[a-z\d])){0,38}$/gim;
+    const handleAlumnIput = (e) =>{
+        setAlumnos(e.target.value);
     }
 
+    const submit = (e) => {
+        e.preventDefault();
+        dispatch(postAlumno(alumnos.match(regex)));
+        setAlumnos("");
+    }
     return (
+        <div>
+            <h1>Agregá un Alumno </h1>
             <Container component="main" maxWidth="xs">
-                <h1>Agregá un cohorte</h1>
-                    <form className={classes.form} noValidate>
-                        <TextField  
-                                value={cohorte}
+                <form className={classes.form} noValidate>
+                    <TextField  
+                                value={alumnos}
                                 type='text'
                                 color="primary"
-                                name="nombre"
+                                name="alumnos"
                                 variant="outlined"
                                 required
                                 fullWidth
-                                label="Nombre del cohorte"
+                                label="Alumnos"
+                                multiline
                                 autoFocus
                                 className={s.margin}
-                                onChange= {(e) =>setNombre(e.target.value)} 
-                        />
+                                onChange={handleAlumnIput}
+                    />
                         <Button
                                 type="submit"
                                 fullWidth
                                 variant="contained"
                                 className={classes.submit}
-                                onClick= {handleSubmit}
+                                onClick= {(e) => submit(e)}
                             >
-                            Agregar cohorte
+                            Agregar Alumnos
                         </Button>
                 </form>
+                {!!alumnos && !!alumnos.match(regex) && alumnos.match(regex).map(alumno => (
+                    <Chip label={alumno} onDelete={() =>{
+                        setAlumnos(alumnos.replace(alumno, "").trim())
+                    }}/>
+                ))}
             </Container>
+        </div>
     )
 }
