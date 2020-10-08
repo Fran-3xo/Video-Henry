@@ -4,11 +4,14 @@ const {Op, literal} = require("sequelize");
 var nodemailer = require('nodemailer');
 const {USER, PASS} = process.env;
 //get de todos los alumnos
+
+
 server.get("/", (req, res, next) =>{
     Usuario.findAll({
         attributes:["username", "proceso"],
         where:{
-            rol: "alumno"
+            rol: "alumno",
+            active: true
         }
     }).then(alumnos => res.json(alumnos))
       .catch(err => next(err));
@@ -35,13 +38,32 @@ server.put("/modulo" , (req,res,next) => {
     .catch(err => next(err))
 })
 //trae los alumnos de un modulo
-server.get("/:proceso", (req, res, next) =>{
-    Usuario.findAll({
-        where:{
-            proceso: req.params.proceso,
-        }
-    }).then(usuario => res.json(usuario))
-        .catch(err => next(err));
-});
+
+// borra un alumno
+/* server.put('/:id/delete', (req,res)=>{
+	const id= req.params.id
+	Usuario.update({
+		active: false
+	}, {where:{
+		username: id
+	}}).then(response=>{
+		res.send(response)
+	}).catch(err => next(err)
+	)
+}) */
+
+server.put ("/delete", (req,res,next) => {
+    const putAlumno= req.body.users.map((usuarios)=>{
+        return Usuario.update({
+            active: false
+        }, {
+            where: {
+                username: usuarios
+            }
+        })
+    })
+    Promise.all(putAlumno).then(()=> res.send("USUARIO ELIMINADO"))
+    .catch(err => next(err))
+})
 
 module.exports = server;
