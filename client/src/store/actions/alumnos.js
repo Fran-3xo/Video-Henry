@@ -1,4 +1,5 @@
 import axios from "axios";
+import { getUsuarios } from "./login";
 
 export const alumnosActionTypes = {
     GET_ALUMNOS: "GET_ALUMNOS",
@@ -6,7 +7,8 @@ export const alumnosActionTypes = {
     PUT_MODULO: "PUT_MODULO",
     GET_ALUMNOS_MODULO: "GET_ALUMNOS_MODULO",
     POST_ALUMNO: "POST_ALUMNO",
-    DROP_USER: "DROP_USER"
+    DROP_USER: "DROP_USER",
+    POST_DIRECTOR: "POST_DIRECTOR"
 }
 
     export const getAlumnos = () => {
@@ -28,7 +30,7 @@ export const alumnosActionTypes = {
                     dispatch({
                         type: alumnosActionTypes.POST_ALUMNO,
                     });
-                    dispatch(getAlumnos())
+                    dispatch(getUsuarios())
             }).catch(err => console.log(err))
         }
     }
@@ -41,7 +43,20 @@ export const dropUser = (users) => {
             dispatch({
                 type:alumnosActionTypes.DROP_USER,
             })
-            dispatch(getAlumnos())
+            dispatch(getUsuarios())
+        }).catch(err => console.log(err))
+    }
+}
+
+export const postDirector = (users) => {
+    return dispatch => {
+        return axios.post ("http://localhost:3006/alumnos/agregar/director", {
+            users,
+        },{withCredentials:true}).then(res => {
+                dispatch({
+                    type: alumnosActionTypes.POST_DIRECTOR,
+                });
+                dispatch(getUsuarios())
         }).catch(err => console.log(err))
     }
 }

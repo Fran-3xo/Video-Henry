@@ -1,7 +1,7 @@
 import React,{useEffect} from "react"
 import styles from "./registrarse.module.css"
 import {useSelector, useDispatch} from "react-redux";
-import {getAlumnos} from "../../store/actions/alumnos"
+import {getUsuarios} from "../../store/actions/login"
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper,Button, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Container, TextField } from "@material-ui/core";
 import DeleteIcon from '@material-ui/icons/Delete';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
@@ -12,7 +12,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 export const TablaAlumnos = () => {
 
-const {alumnos: {alumnos}} = useSelector(store  => store);
+const {user: {usuarios}} = useSelector(store  => store);
 const dispatch = useDispatch();
 const [open, setOpen] = React.useState(false);
 const theme = useTheme();
@@ -60,7 +60,7 @@ const useStyles = makeStyles((theme) => ({
 
 
 useEffect(()=>{
-    dispatch(getAlumnos());
+    dispatch(getUsuarios());
 },[])
 
 return (
@@ -72,12 +72,18 @@ return (
                 <TableCell variant="head">
                     Nombre de usuario
                 </TableCell>
+                <TableCell variant="head">
+                    Rol
+                </TableCell>
             </TableHead>
             <TableBody>
-                {alumnos.map(alumno => (
+                {!!usuarios && usuarios.map(alumno => (
                 <TableRow>
                         <TableCell>
                             {alumno.username}
+                        </TableCell>
+                        <TableCell>
+                            {alumno.rol}
                         </TableCell>
                     </TableRow>))}
             </TableBody>

@@ -6,16 +6,6 @@ const {USER, PASS} = process.env;
 //get de todos los alumnos
 
 
-server.get("/", (req, res, next) =>{
-    Usuario.findAll({
-        attributes:["username", "proceso"],
-        where:{
-            rol: "alumno",
-            active: true
-        }
-    }).then(alumnos => res.json(alumnos))
-      .catch(err => next(err));
-})
 //crea un usuario con solo email
 server.post('/agregar', (req, res, next) => {
     const addEmails = req.body.users.map(email => {
@@ -64,6 +54,19 @@ server.put ("/delete", (req,res,next) => {
     })
     Promise.all(putAlumno).then(()=> res.send("USUARIO ELIMINADO"))
     .catch(err => next(err))
+})
+
+//agrega un administrador
+server.post('/agregar/director', (req, res, next) => {
+    const addEmails = req.body.users.map(email => {
+        return Usuario.create({
+            username: email,
+            rol: 'director',
+            active: true,
+        })
+    })
+    Promise.all(addEmails).then(() => res.send('OK'))
+    .catch( err => next(err))
 })
 
 module.exports = server;
