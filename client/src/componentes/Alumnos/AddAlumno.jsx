@@ -11,7 +11,7 @@ import { IconButton, Chip } from '@material-ui/core';
 import { useHistory } from "react-router-dom";
 import {postAlumno} from "../../store/actions/alumnos"
 import {useDispatch} from "react-redux";
-import {getAlumnos, dropUser} from "../../store/actions/alumnos"
+import {getAlumnos, dropUser, postDirector} from "../../store/actions/alumnos"
 
 
 const useStyles = makeStyles((theme) => ({
@@ -65,6 +65,11 @@ export default function AddAlumno () {
         dispatch(postAlumno(alumnos.match(regex)));
         setAlumnos("");
     }
+    const handleDirector = (e) => {
+        e.preventDefault();
+        dispatch(postDirector(alumnos.match(regex)));
+        setAlumnos("");
+    }
 
     const handleDelete =  (e) => {
         e.preventDefault();
@@ -107,6 +112,15 @@ export default function AddAlumno () {
                                 onClick= {(e)=> handleDelete(e)}
                             >
                             Eliminar Alumnos
+                        </Button>
+                        <Button
+                                type="submit"
+                                fullWidth
+                                variant="contained"
+                                className={classes.submit}
+                                onClick= {(e) => handleDirector(e)}
+                            >
+                            Agregar administrador
                         </Button>
                 </form>
                 {!!alumnos && !!alumnos.match(regex) && alumnos.match(regex).map(alumno => (

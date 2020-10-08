@@ -2,7 +2,8 @@ import { UserActionTypes } from '../actions/login';
 
 //ESTE REDUCER ES UNA PRUEBA DE REDUX
 const initialState = {
-    user: ''
+    user: '',
+    usuarios: []
 };
 
 export const userReducer = (state = initialState, action) => {
@@ -17,6 +18,11 @@ export const userReducer = (state = initialState, action) => {
                 ...state,
                 user: ""
             }
+            case UserActionTypes.GET_USUARIOS:
+                return {
+                    ...state,
+                    usuarios: action.payload,
+                }
             default:
                 return state
             
