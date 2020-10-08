@@ -1,10 +1,10 @@
 import {combineReducers} from "redux";
 import {clasesReducer} from "./clases";
-import {cohorteReducer} from "./cohorte";
 import {userReducer} from "./login";
+import {alumnosReducer} from "./alumnos";
 
 export const rootReducer = combineReducers({
     user: userReducer,
-    cohorte: cohorteReducer,
     clases: clasesReducer,
+    alumnos : alumnosReducer,
 });

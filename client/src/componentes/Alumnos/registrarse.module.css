@@ -1,0 +1,45 @@
+.color {
+    background-color: rgb(255, 255, 1);
+    margin: auto;
+
+}
+
+.imagen{
+    border: solid 2px black;
+    width:200px;
+
+}
+.alumnos {
+    margin-left: 10rem;
+}
+
+.container{
+    margin-bottom: 100px;
+    margin: auto;
+    width: 400px;
+    margin-top: 100px;
+    padding: 10px 10px 10px 10px;
+    border: solid 2px black;
+
+}
+.button {
+    margin-left: 8px;
+    background-color: yellow;
+    color: black;
+}
+
+.inputs{
+    display: flex;
+    justify-content: flex-start;
+}
+.form {
+    width: 100%;
+    
+
+}
+
+.margin{
+    margin: 0.5rem !important;
+    
+}
+

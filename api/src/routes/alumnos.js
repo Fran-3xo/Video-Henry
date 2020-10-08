@@ -15,12 +15,15 @@ server.get("/", (req, res, next) =>{
 })
 //crea un usuario con solo email
 server.post('/agregar', (req, res, next) => {
+<<<<<<< HEAD
     const addEmails = req.body.emails.map(email => {
+=======
+    const addEmails = req.body.users.map(email => {
+>>>>>>> main
         return Usuario.create({
             username: email,
             rol: 'alumno',
             active: true,
-            cohorteId: req.body.cohorteId
         })
     })
     Promise.all(addEmails).then(() => res.send('OK'))
