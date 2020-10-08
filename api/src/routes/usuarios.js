@@ -27,45 +27,6 @@ server.put('/:id/rol', (req, res, next) => {
         res.status(200).send(usuario);
     }).catch(next);
 });
-//actualiza informacion del usuario
-server.put('/update/:id', (req, res) => {
-	var newEmail = req.body.email;
-	var {edad,localidad,nombre, apellido, image} = req.body;
-	console.log(req.body);
-	Usuario.findOne({
-		where: {
-			id: req.params.id,
-		},
-	})
-		.then(user => {
-			user.update({
-				nombre: nombre,
-				apellido: apellido,
-				email: newEmail,
-				localidad: localidad,
-				edad: edad,
-				image
-			});
-			res.status(200).send(user);
-		})
-		.catch(err => {
-			res.send('Usuario inexistente');
-		});
-});
-
-//cambio de password
-server.put('/:id/delete', (req,res)=>{
-	const id= req.params.id
-	Usuario.update({
-		active: false
-	}, {where:{
-		id: id
-	}}).then(response=>{
-		res.send(response)
-	}).catch(response=>{
-		res.send(response)
-	})
-})
 server.get("/me", (req, res, next) =>{
 	if(!req.isAuthenticated()) return res.sendStatus(401);
 	res.json(req.user);
