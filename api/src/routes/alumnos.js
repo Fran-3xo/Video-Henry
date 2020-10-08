@@ -15,37 +15,15 @@ server.get("/", (req, res, next) =>{
 })
 //crea un usuario con solo email
 server.post('/agregar', (req, res, next) => {
-<<<<<<< HEAD
-    const addEmails = req.body.emails.map(email => {
-=======
-    const addEmails = req.body.users.map(email => {
->>>>>>> main
+    const addUsers = req.body.users.map(user => {
         return Usuario.create({
-            username: email,
+            username: user,
             rol: 'alumno',
             active: true,
         })
     })
-    Promise.all(addEmails).then(() => res.send('OK'))
+    Promise.all(addUsers).then(() => res.send('OK'))
     .catch( err => next(err))
 })
-
-//le cambia el proceso a un alumno
-server.put("/modulo" , (req,res,next) => {
-    Usuario.findByPk(req.body.usuarioId)
-    .then(usuario => {usuario.proceso = req.body.proceso;
-    return usuario.save()
-    }).then(usuario => res.json(usuario))
-    .catch(err => next(err))
-})
-//trae los alumnos de un modulo
-server.get("/:proceso", (req, res, next) =>{
-    Usuario.findAll({
-        where:{
-            proceso: req.params.proceso,
-        }
-    }).then(usuario => res.json(usuario))
-        .catch(err => next(err));
-});
 
 module.exports = server;

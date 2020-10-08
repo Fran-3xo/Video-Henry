@@ -10,11 +10,6 @@ module.exports = (sequelize) => {
             type: DataTypes.STRING,
             allowNull: false
         },
-        proceso: {
-            type : DataTypes.INTEGER,
-            defaultValues : 1,
-            allowNull: true,
-        },
         provider: {
             type: DataTypes.STRING,
             allowNull: true

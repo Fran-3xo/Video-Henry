@@ -5,8 +5,11 @@ import NavBar from "./componentes/NavBar/NavBar";
 import Admin from "./componentes/Admin/Admin";
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import Login from "./componentes/Login/login";
+import Home from "./componentes/Home/Home";
+import Clases from "./componentes/Clase/Clases"
 import {logIn} from "./store/actions/login";
 import {useDispatch, useSelector} from "react-redux";
+import ClaseDisplay from './componentes/Clase/ClaseDisplay';
 const theme = createMuiTheme({
   palette: {
     primary: {
@@ -57,7 +60,13 @@ function App() {
           <h1>Usuario NO autarizado</h1>
         </Route>
         <Route exact path="/Home">
-          <h1>Home</h1>  
+           {!!user?<Home/>:<Redirect to="/"/>}
+        </Route>
+        <Route exact path="/modulo/:modulo">
+           {!!user?<Clases/>:<Redirect to="/"/>}
+        </Route>
+        <Route exact path="/video/:video_id">
+           {!!user?<ClaseDisplay/>:<Redirect to="/"/>}
         </Route>
       </ThemeProvider>
     </div>
