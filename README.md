@@ -2,7 +2,7 @@
     <img src='https://static.wixstatic.com/media/85087f_0d84cbeaeb824fca8f7ff18d7c9eaafd~mv2.png/v1/fill/w_160,h_30,al_c,q_85,usm_0.66_1.00_0.01/Logo_completo_Color_1PNG.webp' </img>
 </p>
 
-# Henry-App
+# Henry-App-Videos
 
 ## Tecnologias Usadas
 
@@ -32,16 +32,16 @@ Para iniciar el proyecto deberas:
 DB_USER={Your postgreSQL user}
 DB_PASSWORD={Your postgreSQL password}
 DB_HOST=localhost
+GH_ID={client_id github}
+GH_SECRET={client_secret github}
 
 ```
 
-Para administrar la pagina debes loguearte con el siguiente usuario:
+Para administrar la pagina debes colocar tu usuario de github en el archivo .env de la siguiente manero:
 ```
-email: admin@henry.com
-password: 1234
+USER_ADMIN={usuario de github}
 
 ```
 
-Para agregar a un alumno, deberas ir a la seccion `Admin` luego hacer click en `administracion de cohortes`, `clickear un cohorte`, y por ultimo clickear en el lapiz que esta dentro de la tabla, alli podras agregar a un alumno utilizando su `mail`.
-
-Le llegara un mail invitando a el alumno a que se registre, una vez registrado, podras comenzar a administrarlo, agregandole notas, poniendolo en un grupo de cohortes, y demas.
+Para agregar a un video, deberas ir a la seccion `Admin` luego hacer click en `Clases`, alli podras agregar un video utilizando su `url` ex: `https://vimeo.com/{video_id}`.
+Para agregar a un usuario, deberas ir a la seccion `Admin` luego hacer click en `Usuarios`, alli podras agregar un usuario utilizando su `username` de github.
