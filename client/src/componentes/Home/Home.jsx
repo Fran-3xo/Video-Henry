@@ -19,7 +19,20 @@ const images = [
     {
         url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRJECsXGkOPiCyLF5lhN0pRbhw_UnFcOkhyZQ&usqp=CAU',
         title: 'M4',
+    },
+    {
+        url:"https://concepto.de/wp-content/uploads/2018/08/workshop-entrenamiento-e1533739153178.jpg",
+        title: "Workshop"
+    },
+    {
+        url:"https://elroldanense.com/wp-content/uploads/2019/08/charlas2.jpg",
+        title: "Talks"
+    },
+    {
+        url:"https://dev-res.thumbr.io/libraries/14/04/09/lib/1533172648445_1.jpg?size=854x493s&ext=jpg",
+        title: "Otros"
     }
+
 ];
 
 export default function Home() {

@@ -12,6 +12,7 @@
     color: white;
     width: 100%;
     border-radius: 2px;
+    margin-top: 6px;
 }
 .search:hover{
     background-color: rgba(255,255,255,0.4);
@@ -37,7 +38,7 @@
     margin-left: 3px;
 }
 .letras  {
-    color: black;
+    color: white;
     display: flex;
     text-align: left;
 }
@@ -70,11 +71,12 @@
   .user{
       margin-left: auto;
       color: yellow;
+      display:flex;
   }
  
   .nolink{
       text-decoration: none;
-      color: black;
+      color:white;
   }
   
  .divs{

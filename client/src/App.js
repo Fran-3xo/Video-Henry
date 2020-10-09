@@ -10,6 +10,7 @@ import Clases from "./componentes/Clase/Clases"
 import {logIn} from "./store/actions/login";
 import {useDispatch, useSelector} from "react-redux";
 import ClaseDisplay from './componentes/Clase/ClaseDisplay';
+import AboutUs from './componentes/AboutUs/Aboutus';
 const theme = createMuiTheme({
   palette: {
     primary: {
@@ -60,7 +61,7 @@ function App() {
           <h1>Usuario NO autarizado</h1>
         </Route>
         <Route exact path="/Home">
-           {!!user?<Home/>:<Redirect to="/"/>}
+            {!!user?<Home/>:<Redirect to="/"/>}
         </Route>
         <Route exact path="/modulo/:modulo">
            {!!user?<Clases/>:<Redirect to="/"/>}
@@ -70,6 +71,9 @@ function App() {
         </Route>
         <Route exact path="/video/:video_id">
            {!!user?<ClaseDisplay/>:<Redirect to="/"/>}
+        </Route>
+        <Route path="/AboutUs">
+          <AboutUs/>
         </Route>
       </ThemeProvider>
     </div>
