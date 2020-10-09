@@ -10,7 +10,7 @@ module.exports = (sequelize) => {
             allowNull: true,
             validate:{
                 isIn: {
-                    args: [['M1', 'M2', 'M3', 'M4']],
+                    args: [['M1', 'M2', 'M3', 'M4','']],
                     msg: "Debe pertenecer a algún modulo('M1', 'M2', 'M3', 'M4')"
                 }
             }
