@@ -46,6 +46,10 @@ export default function Form () {
     const [modulo, setModulo] = useState("")
     const dispatch = useDispatch();
     const [link, setLink] = useState("")
+    const [errorLink, setErrorLink] = useState({
+        touched:false,
+        msg:""
+    });
     const [inputs, setInputs] = useState({
         instructor:"",
         cohorte:"",
@@ -54,15 +58,22 @@ export default function Form () {
         setModulo(e.target.value)
     }
     const handleLinkChange = (e) =>{
-        setLink(e.target.value)
+        setLink(e.target.value.trim());
+        setErrorLink({...errorLink, touched:true});
+        if(!!e.target.value.trim()) setErrorLink({...errorLink, msg:""});
+    }
+    const handleError = (e) =>{
+        if(!e.target.value.trim() && errorLink.touched) setErrorLink({...errorLink, msg:"Debe ingresar un de vimeo ex: http://vimeo.com/video_id"});
     }
     const handleSubmit = (e) => {
         e.preventDefault();
-        dispatch(postClase({
-            link: link,
-            modulo,
-            ...inputs
-        }))
+        if(!errorLink.msg && !!link) 
+            dispatch(postClase({
+                link: link,
+                modulo,
+                ...inputs
+            }))
+        if(!link) setErrorLink({...errorLink, msg:"Debe ingresar un de vimeo ex: http://vimeo.com/video_id"});
     }
     const handleInput = (e) =>{
         setInputs({
@@ -74,20 +85,22 @@ export default function Form () {
         <div>
             <Container component="main" maxWidth="xs">
                 <form className={classes.form} onSubmit={handleSubmit}>
-                        <TextField 
+                        <TextField
+                            error={!!errorLink.msg}
                             type='text'
                             color="primary"
                             name="link"
                             variant="outlined"
-                            required
                             fullWidth
                             label="Link"
                             autoFocus
                             className={s.margin}
                             onChange={handleLinkChange}
-                            helperText=""
+                            onFocus={() => setErrorLink({...errorLink, touched:true})}
+                            onBlur={handleError}
+                            helperText={!!errorLink.msg && errorLink.msg}
                         />
-                        <FormControl required variant="outlined" className={`${classes.formControl} ${s.margin}`}>
+                        <FormControl variant="outlined" className={`${classes.formControl} ${s.margin}`}>
                             <InputLabel id="inputSelect">Modulo</InputLabel>
                             <Select labelId="inputSelect" label="Modulo" onChange={handleModuloChange}>
                                 <MenuItem value="" selected disabled></MenuItem>
@@ -96,7 +109,6 @@ export default function Form () {
                                 <MenuItem value="M3">M3</MenuItem>
                                 <MenuItem value="M4">M4</MenuItem>
                             </Select>
-                            <FormHelperText></FormHelperText>
                         </FormControl>
                         <TextField 
                             type='text'

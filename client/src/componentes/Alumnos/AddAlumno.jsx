@@ -55,25 +55,40 @@ export default function AddAlumno () {
         open: false,
         alumnoId: ""
     });
+    const [error, setError] = useState({
+        touched:false,
+        msg:""
+    })
     const regex = /^[a-z\d](?:[a-z\d]|-(?=[a-z\d])){0,38}$/gim;
     const handleAlumnIput = (e) =>{
-        setAlumnos(e.target.value);
+        setAlumnos(e.target.value.trim());
+        if(!!e.target.value.trim()) setError({...error, msg:""})
     }
 
     const submit = (e) => {
         e.preventDefault();
-        dispatch(postAlumno(alumnos.match(regex)));
-        setAlumnos("");
+        if(!error.msg && !!alumnos){
+            dispatch(postAlumno(alumnos.match(regex)));
+            setAlumnos("");
+        }else setError({...error, msg:"Debe ingresar usuario/s"})
     }
     const handleDirector = (e) => {
         e.preventDefault();
-        dispatch(postDirector(alumnos.match(regex)));
-        setAlumnos("");
+        if(!error.msg && !!alumnos){
+            dispatch(postDirector(alumnos.match(regex)))
+            setAlumnos("");
+        }else setError({...error, msg:"Debe ingresar usuario/s"})
     }
-
+    const handleError = (e) => {
+        if(!e.target.value.trim()) setError({...error, msg:"Debe ingresar usuario/s"})
+    }
     const handleDelete =  (e) => {
         e.preventDefault();
+        if(!error.msg && !!alumnos){
             dispatch(dropUser(alumnos.match(regex)))
+            setAlumnos("");
+        }else setError({...error, msg:"Debe ingresar usuario/s"})
+            
         
     };
     return (
@@ -83,17 +98,20 @@ export default function AddAlumno () {
                 <form className={classes.form} noValidate>
                     <TextField  
                         value={alumnos}
+                        error={!!error.msg}
                         type='text'
                         color="primary"
                         name="alumnos"
                         variant="outlined"
-                        required
                         fullWidth
                         label="Alumnos"
                         multiline
                         autoFocus
                         className={s.margin}
+                        onBlur={handleError}
+                        onFocus={()=> setError({...error, touched:true})}
                         onChange={handleAlumnIput}
+                        helperText={!!error.msg && error.msg}
                     />
                     {!!alumnos && !!alumnos.match(regex) && alumnos.match(regex).map(alumno => (
                         <Chip label={alumno} onDelete={() =>{
