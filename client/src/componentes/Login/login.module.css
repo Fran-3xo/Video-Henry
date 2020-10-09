@@ -1,3 +1,20 @@
 .login{
-    margin-top: 5rem;
+    margin-top: 15rem;
+    width: 400px;
+    height: 300px;
+    margin-left: 30rem;
+    
+
+    
+}
+
+
+.boton {
+    color: white !important;
+    margin-left: auto!important;
+    
+}
+
+.titulo {
+    color: yellow
 }
