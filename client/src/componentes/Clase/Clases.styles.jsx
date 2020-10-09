@@ -2,20 +2,22 @@ import { makeStyles } from '@material-ui/core/styles';
 
 export default makeStyles((theme) => ({
     contenedor: {
-        paddingTop: '50px',
+        margin:"5rem 2rem",
         display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#E6E6DD'
+        flexWrap: 'wrap',
+    },
+    contenedor_video:{
+        display: "flex",
+        margin:"5rem 2rem",
+        justifyContent: "center"
     },
     boton: {
         width: "400px",
         margin: '10px',
     },
     media: {
-        height: 340,
-        maxWidth: 345,
+        minWidth: 850,
+        maxWidth: "none",
     },
     
 botonRegresar: {

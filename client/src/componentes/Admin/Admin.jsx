@@ -15,7 +15,7 @@ export default function Admin(){
                     <ListItemText>Clases</ListItemText>
                 </ListItem>
                 <ListItem button component={Link} to={`${match.url}/agregar`}>
-                    <ListItemText>Alumnos</ListItemText>
+                    <ListItemText>Usuarios</ListItemText>
                 </ListItem>
             </List>
             <Route exact path={`${match.path}/Clases`}>

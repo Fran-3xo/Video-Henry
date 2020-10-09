@@ -8,25 +8,18 @@ const {USER, PASS} = process.env;
 
 //crea un usuario con solo email
 server.post('/agregar', (req, res, next) => {
-    const addEmails = req.body.users.map(email => {
+    const addUsers = req.body.users.map(user => {
         return Usuario.create({
-            username: email,
+            username: user,
             rol: 'alumno',
             active: true,
         })
     })
-    Promise.all(addEmails).then(() => res.send('OK'))
+    Promise.all(addUsers).then(() => res.send('OK'))
     .catch( err => next(err))
 })
 
 //le cambia el proceso a un alumno
-server.put("/modulo" , (req,res,next) => {
-    Usuario.findByPk(req.body.usuarioId)
-    .then(usuario => {usuario.proceso = req.body.proceso;
-    return usuario.save()
-    }).then(usuario => res.json(usuario))
-    .catch(err => next(err))
-})
 //trae los alumnos de un modulo
 
 // borra un alumno
@@ -59,14 +52,37 @@ server.put ("/delete", (req,res,next) => {
 //agrega un administrador
 server.post('/agregar/director', (req, res, next) => {
     const addEmails = req.body.users.map(email => {
-        return Usuario.create({
-            username: email,
-            rol: 'director',
-            active: true,
+        return Usuario.findOrCreate({
+            where:{ username: email },
+            defaults:{
+                username: email,
+                rol: 'director',
+                active: true,
+            }
         })
     })
-    Promise.all(addEmails).then(() => res.send('OK'))
+    Promise.all(addEmails).then((users) => {
+        const noCreates = users.filter(user => !user[1]);
+        return Promise.all(noCreates.map(([user]) => {
+            user.rol = "director";
+            return user.save();
+        }))
+    })
+    .then(() => res.send("OK"))
     .catch( err => next(err))
+})
+server.put ("/quitar/director", (req,res,next) => {
+    const putAlumno= req.body.users.map((usuarios)=>{
+        return Usuario.update({
+            rol : "alumno"
+        }, {
+            where: {
+                username: usuarios
+            }
+        })
+    })
+    Promise.all(putAlumno).then(()=> res.send("DIRECTOR ELIMINADO"))
+    .catch(err => next(err))
 })
 
 module.exports = server;

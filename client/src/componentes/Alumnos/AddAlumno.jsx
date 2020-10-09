@@ -78,57 +78,56 @@ export default function AddAlumno () {
     };
     return (
         <div>
-            <h3>Agregá o elimina un alumno </h3>
+            <h3>Agregá o elimina</h3>
             <Container component="main" maxWidth="xs">
                 <form className={classes.form} noValidate>
                     <TextField  
-                                value={alumnos}
-                                type='text'
-                                color="primary"
-                                name="alumnos"
-                                variant="outlined"
-                                required
-                                fullWidth
-                                label="Alumnos"
-                                multiline
-                                autoFocus
-                                className={s.margin}
-                                onChange={handleAlumnIput}
+                        value={alumnos}
+                        type='text'
+                        color="primary"
+                        name="alumnos"
+                        variant="outlined"
+                        required
+                        fullWidth
+                        label="Alumnos"
+                        multiline
+                        autoFocus
+                        className={s.margin}
+                        onChange={handleAlumnIput}
                     />
+                    {!!alumnos && !!alumnos.match(regex) && alumnos.match(regex).map(alumno => (
+                        <Chip label={alumno} onDelete={() =>{
+                            setAlumnos(alumnos.replace(alumno, "").trim())
+                        }}/>
+                    ))}
                         <Button
-                                type="submit"
-                                fullWidth
-                                variant="contained"
-                                className={classes.submit}
-                                onClick= {(e) => submit(e)}
+                            type="submit"
+                            fullWidth
+                            variant="contained"
+                            className={classes.submit}
+                            onClick= {(e) => submit(e)}
                             >
                             Agregar Alumnos
                         </Button>
                         <Button
-                                type="submit"
-                                fullWidth
-                                variant="contained"
-                                className={classes.submit}
-                                onClick= {(e)=> handleDelete(e)}
+                            type="submit"
+                            fullWidth
+                            variant="contained"
+                            className={classes.submit}
+                            onClick= {(e)=> handleDelete(e)}
                             >
                             Eliminar Alumnos
                         </Button>
                         <Button
-                                type="submit"
-                                fullWidth
-                                variant="contained"
-                                className={classes.submit}
-                                onClick= {(e) => handleDirector(e)}
+                            type="submit"
+                            fullWidth
+                            variant="contained"
+                            className={classes.submit}
+                            onClick= {(e) => handleDirector(e)}
                             >
                             Agregar administrador
                         </Button>
                 </form>
-                {!!alumnos && !!alumnos.match(regex) && alumnos.match(regex).map(alumno => (
-                    <Chip label={alumno} onDelete={() =>{
-                        setAlumnos(alumnos.replace(alumno, "").trim())
-                    }}/>
-                ))}
-                
             </Container>
         </div>
     )

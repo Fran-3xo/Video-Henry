@@ -1,15 +1,11 @@
 import React, { useState } from "react";
 import axios from 'axios';
 import s from "./registrarse.module.css"
-import { Button, CssBaseline, TextField, FormHelperText } from '@material-ui/core';
-import Link from '@material-ui/core/Link';
-import Box from '@material-ui/core/Box';
-import Typography from '@material-ui/core/Typography';
+import { Button, TextField, FormControl, Select, MenuItem, InputLabel, FormHelperText } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import { IconButton } from '@material-ui/core';
-import { useHistory } from "react-router-dom";
-
+import {useDispatch} from "react-redux";
+import {postClase} from "../../../store/actions/clases"
 const useStyles = makeStyles((theme) => ({
     paper: {
         marginTop: theme.spacing(8),
@@ -20,6 +16,9 @@ const useStyles = makeStyles((theme) => ({
     avatar: {
         margin: theme.spacing(1),
         backgroundColor: theme.palette.secondary.main,
+    },
+    formControl:{
+        minWidth: 395,
     },
     form: {
         width: '100%',
@@ -44,50 +43,88 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Form () {
     const classes = useStyles();
-
+    const [modulo, setModulo] = useState("")
+    const dispatch = useDispatch();
+    const [link, setLink] = useState("")
+    const [inputs, setInputs] = useState({
+        instructor:"",
+        cohorte:"",
+    })
+    const handleModuloChange = (e) =>{
+        setModulo(e.target.value)
+    }
+    const handleLinkChange = (e) =>{
+        setLink(e.target.value)
+    }
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        dispatch(postClase({
+            link: link,
+            modulo,
+            ...inputs
+        }))
+    }
+    const handleInput = (e) =>{
+        setInputs({
+            ...inputs,
+            [e.target.name]:e.target.value
+        })
+    }
     return (
         <div>
-            <h1>Agregá un video </h1>
             <Container component="main" maxWidth="xs">
-                <form className={classes.form} noValidate>
-                    <TextField  
-                                type='text'
-                                color="primary"
-                                name="clase"
-                                variant="outlined"
-                                required
-                                fullWidth
-                                label="Clase"
-                                autoFocus
-                                className={s.margin}
-                    />
+                <form className={classes.form} onSubmit={handleSubmit}>
                         <TextField 
-                                type='text'
-                                color="primary"
-                                name="link"
-                                variant="outlined"
-                                required
-                                fullWidth
-                                label="Link"
-                                autoFocus
-                                className={s.margin}
-                    />
+                            type='text'
+                            color="primary"
+                            name="link"
+                            variant="outlined"
+                            required
+                            fullWidth
+                            label="Link"
+                            autoFocus
+                            className={s.margin}
+                            onChange={handleLinkChange}
+                            helperText=""
+                        />
+                        <FormControl required variant="outlined" className={`${classes.formControl} ${s.margin}`}>
+                            <InputLabel id="inputSelect">Modulo</InputLabel>
+                            <Select labelId="inputSelect" label="Modulo" onChange={handleModuloChange}>
+                                <MenuItem value="" selected disabled></MenuItem>
+                                <MenuItem value="M1">M1</MenuItem>
+                                <MenuItem value="M2">M2</MenuItem>
+                                <MenuItem value="M3">M3</MenuItem>
+                                <MenuItem value="M4">M4</MenuItem>
+                            </Select>
+                            <FormHelperText></FormHelperText>
+                        </FormControl>
                         <TextField 
-                                type='text'
-                                color="primary"
-                                name="modulo"
-                                variant="outlined"
-                                required
-                                fullWidth
-                                label="Modulo"
-                                autoFocus
-                                className={s.margin}
-                    />
+                            type='text'
+                            color="primary"
+                            name="instructor"
+                            variant="outlined"
+                            fullWidth
+                            label="Instructor"
+                            autoFocus
+                            className={s.margin}
+                            onChange={handleInput}
+                        />
+                        <TextField 
+                            type='text'
+                            color="primary"
+                            name="cohorte"
+                            variant="outlined"
+                            fullWidth
+                            label="Cohorte"
+                            autoFocus
+                            className={s.margin}
+                            onChange={handleInput}
+                        />
                         <Button
-                                type="submit"
-                                fullWidth
-                                variant="contained"
-                                className={classes.submit}
+                            type="submit"
+                            fullWidth
+                            variant="contained"
+                            className={classes.submit}
                             >
                             Agregar video
                         </Button>
