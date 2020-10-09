@@ -2,7 +2,8 @@ import axios from "axios";
 
 export const ModuloActionTypes = {
     GET_MODULO: 'GET_MODULO',
-    POST_CLASE: 'POST_CLASE'
+    POST_CLASE: 'POST_CLASE',
+    SEARCH_VIDEOS: "SEARCH_VIDEOS"
 };
 
 export const getClasesByModulo = (modulo, pag = 48) => {
@@ -28,3 +29,16 @@ export const postClase = (clase) => {
             .catch(err => console.log(err));
     };
 };
+
+export const searchVideos = (query) => {
+    return (dispatch) => {
+        return axios.get(`http://localhost:3006/clase/search/${query}`,{withCredentials:true}
+        ).then((res) => {
+            dispatch({
+                type:ModuloActionTypes.SEARCH_VIDEOS,
+                payload:res.data
+            })
+        })
+        .catch(err => console.log(err))
+    }
+}

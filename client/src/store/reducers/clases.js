@@ -3,7 +3,8 @@ import { ModuloActionTypes } from '../actions/clases';
 
 const initialState = {
     clases: [],
-    currents: 0
+    currents: 0,
+    
 };
 
 export const clasesReducer = (state = initialState, action) => {
@@ -17,6 +18,11 @@ export const clasesReducer = (state = initialState, action) => {
         case ModuloActionTypes.POST_CLASE:
             return {
                 ...state,
+            }
+        case ModuloActionTypes.SEARCH_VIDEOS:
+            return {
+                ...state,
+                clases: action.payload
             }
         default:
             return state
