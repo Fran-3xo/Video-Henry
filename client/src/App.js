@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import './App.css';
-import {Route, Redirect, useHistory} from "react-router-dom";
+import {Route, Redirect, useHistory, useRouteMatch, useLocation} from "react-router-dom";
 import NavBar from "./componentes/NavBar/NavBar";
 import Admin from "./componentes/Admin/Admin";
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
@@ -63,6 +63,9 @@ function App() {
            {!!user?<Home/>:<Redirect to="/"/>}
         </Route>
         <Route exact path="/modulo/:modulo">
+           {!!user?<Clases/>:<Redirect to="/"/>}
+        </Route>
+        <Route path="/search/:query">
            {!!user?<Clases/>:<Redirect to="/"/>}
         </Route>
         <Route exact path="/video/:video_id">

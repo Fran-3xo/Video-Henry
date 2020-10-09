@@ -3,7 +3,39 @@
     height: 60px;
 
 }
-
+.searchBar{
+    margin-left: auto;
+}
+.search{
+    position: relative;
+    background-color: rgba(255,255,255,0.2);
+    color: white;
+    width: 100%;
+    border-radius: 2px;
+}
+.search:hover{
+    background-color: rgba(255,255,255,0.4);
+}
+.inputRoot{
+    color:inherit;
+}
+.inputInput{
+    padding: 0.5rem !important;
+    margin-left: 1.5rem !important;
+    color: white !important;
+}
+.inputInput::placeholder{
+    color: white !important;
+    opacity: 0.7 !important;
+}
+.searchIcon{
+    height: 100%;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 3px;
+}
 .letras  {
     color: black;
     display: flex;

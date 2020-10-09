@@ -8,6 +8,16 @@ server.get("/github/login", passport.authenticate("github", { scope: ["user:emai
 server.get("/github/cb", passport.authenticate("github", { failureRedirect: 'http://localhost:3000/failure_login' }), (req, res) => {
 	res.redirect("http://localhost:3000/github_login");
 });
+
+server.get("/", (req, res, next) =>{
+    Usuario.findAll({
+        attributes:["username", "rol"],
+        where:{
+            active: true
+        }
+    }).then(alumnos => res.json(alumnos))
+        .catch(err => next(err));
+})
 //deslogueo de un usuario
 server.get('/logout', (req, res) =>{
 	req.logout();

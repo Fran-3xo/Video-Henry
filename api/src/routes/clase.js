@@ -11,6 +11,8 @@ server.post("/", (req, res, next) => {
                 titulo: res.data.title,
                 iframe: res.data.html,
                 link: req.body.link,
+                instructor: req.body.instructor,
+                cohorte: req.body.cohorte,
                 prev_image: res.data.thumbnail_url,
                 video_id: res.data.video_id
             })
@@ -19,18 +21,18 @@ server.post("/", (req, res, next) => {
         .catch(err => next(err));
 })
 //trae la clase por query
-server.get("/search?:query", (req, res, next) =>{
+server.get("/search/:query", (req, res, next) =>{
     Clase.findAll({
         where:{
             [Op.or]:[
                 {
                     modulo : {
-                        [Op.iLike]: req.query.query
+                        [Op.iLike]: req.params.query
                     },
                 },
                 {
                     titulo:{
-                        [Op.iLike]: req.query.query
+                        [Op.iLike]: req.params.query
                     }
                 }
             ]

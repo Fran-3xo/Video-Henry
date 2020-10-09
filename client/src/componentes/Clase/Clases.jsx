@@ -1,21 +1,20 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Button, GridList, GridListTile, GridListTileBar, useMediaQuery } from '@material-ui/core'
 import { useSelector, useDispatch } from 'react-redux';
 import {getClasesByModulo} from "../../store/actions/clases"
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useLocation } from 'react-router-dom';
 import useStyles from './Clases.styles'
-import axios from "axios";
 export default function Modulo(props) {
     const classes = useStyles();
     const max1024 =useMediaQuery("(max-width:1024px)")
     const max600 =useMediaQuery("(max-width:600px)")
-    const { modulo } = useParams();
+    const { modulo, query } = useParams();
     const dispatch = useDispatch();
     const {clases: {clases, currents}} = useSelector(store => store);
-    const [display, setDisplay] = useState(currents)
     useEffect(()=>{
-        dispatch(getClasesByModulo(modulo));
-    },[modulo]);
+        if(!!modulo)dispatch(getClasesByModulo(modulo));
+        //if(!!query) Aca va se dispacha la accion de busqueda con query como argumento
+    },[query, modulo]);
     return (
         <div className={classes.contenedor}>
             <GridList cols={max1024?max600?1:2:4} cellHeight={240}>
@@ -35,11 +34,11 @@ export default function Modulo(props) {
                         })()
                     } to={`/video/${clase.video_id}`}>
                         <img src={clase.prev_image}/>
-                        <GridListTileBar title={clase.titulo} subtitle={clase.modulo}/>
+                        <GridListTileBar title={clase.titulo} subtitle={`${clase.modulo || ""} - ${clase.instructor || ""} - ${clase.cohorte || ""}`}/>
                     </GridListTile>
                 ))}
             </GridList>
-            {display > 48 && (<Button onClick={() => dispatch(getClasesByModulo(modulo, (display * 2)))}>Ver mas</Button>)}
+            {currents > 48 && (<Button onClick={() => dispatch(getClasesByModulo(modulo, (currents * 2)))}>Ver mas</Button>)}
         </div>
     );
 }  

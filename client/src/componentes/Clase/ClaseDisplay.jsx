@@ -10,14 +10,15 @@ export default function ClaseDisplay(){
     const [video, setVideo] = useState();
     const {clases: {clases}} = useSelector(store => store);
     useEffect(()=>{
-        setVideo(clases.filter(clase => clase.video_id === parseInt(video_id))[0]);
+        const [clase] = clases.filter(clase => clase.video_id === parseInt(video_id));
+        if (!!clase) setVideo(clase);
     },[video_id])
     return (
         <div className={classes.contenedor_video}>
             {!!video?(
                 <Card className={classes.media}>
                     <CardMedia component="div" dangerouslySetInnerHTML={{__html:video.iframe}}/>
-                    <CardHeader title={video.titulo} subheader={video.modulo}/>
+                    <CardHeader title={video.titulo} subheader={`${video.modulo || ""} - ${video.instructor || ""} - ${video.cohorte || ""}`}/>
                 </Card>
             ):(
                 <Card className={classes.media}>

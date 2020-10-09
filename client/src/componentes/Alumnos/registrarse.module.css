@@ -10,7 +10,12 @@
 
 }
 .alumnos {
-    margin-left: 10rem;
+    margin-left: 8rem;
+    width: 80%;
+}
+.delete {
+    display: flex !important;
+    margin-left: auto !important;
 }
 
 .container{
@@ -41,5 +46,10 @@
 .margin{
     margin: 0.5rem !important;
     
+}
+
+.dialog {
+    width: 400px !important;
+    height: 300px !important;
 }
 

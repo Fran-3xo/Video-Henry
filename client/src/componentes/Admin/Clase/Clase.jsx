@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from 'axios';
 import s from "./registrarse.module.css"
-import { Button, TextField, FormControl, Select, MenuItem, InputLabel } from '@material-ui/core';
+import { Button, TextField, FormControl, Select, MenuItem, InputLabel, FormHelperText } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import {useDispatch} from "react-redux";
@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: theme.palette.secondary.main,
     },
     formControl:{
-        minWidth: 120,
+        minWidth: 395,
     },
     form: {
         width: '100%',
@@ -46,6 +46,10 @@ export default function Form () {
     const [modulo, setModulo] = useState("")
     const dispatch = useDispatch();
     const [link, setLink] = useState("")
+    const [inputs, setInputs] = useState({
+        instructor:"",
+        cohorte:"",
+    })
     const handleModuloChange = (e) =>{
         setModulo(e.target.value)
     }
@@ -56,8 +60,15 @@ export default function Form () {
         e.preventDefault();
         dispatch(postClase({
             link: link,
-            modulo
+            modulo,
+            ...inputs
         }))
+    }
+    const handleInput = (e) =>{
+        setInputs({
+            ...inputs,
+            [e.target.name]:e.target.value
+        })
     }
     return (
         <div>
@@ -74,17 +85,41 @@ export default function Form () {
                             autoFocus
                             className={s.margin}
                             onChange={handleLinkChange}
+                            helperText=""
                         />
-                        <FormControl required variant="outlined" className={classes.formControl}>
+                        <FormControl required variant="outlined" className={`${classes.formControl} ${s.margin}`}>
                             <InputLabel id="inputSelect">Modulo</InputLabel>
                             <Select labelId="inputSelect" label="Modulo" onChange={handleModuloChange}>
-                                <MenuItem value=""></MenuItem>
+                                <MenuItem value="" selected disabled></MenuItem>
                                 <MenuItem value="M1">M1</MenuItem>
                                 <MenuItem value="M2">M2</MenuItem>
                                 <MenuItem value="M3">M3</MenuItem>
                                 <MenuItem value="M4">M4</MenuItem>
                             </Select>
+                            <FormHelperText></FormHelperText>
                         </FormControl>
+                        <TextField 
+                            type='text'
+                            color="primary"
+                            name="instructor"
+                            variant="outlined"
+                            fullWidth
+                            label="Instructor"
+                            autoFocus
+                            className={s.margin}
+                            onChange={handleInput}
+                        />
+                        <TextField 
+                            type='text'
+                            color="primary"
+                            name="cohorte"
+                            variant="outlined"
+                            fullWidth
+                            label="Cohorte"
+                            autoFocus
+                            className={s.margin}
+                            onChange={handleInput}
+                        />
                         <Button
                             type="submit"
                             fullWidth

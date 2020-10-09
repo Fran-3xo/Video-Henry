@@ -9,9 +9,10 @@ import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';  
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
-import {AccountCircle, ExitToApp} from '@material-ui/icons';
+import {AccountCircle, ExitToApp, Search} from '@material-ui/icons';
 import {useDispatch, useSelector} from 'react-redux';
 import {logOut} from '../../store/actions/login';
+import SearchBar from './SearchBar';
 const useStyles = makeStyles((theme) => ({
   formControl: {
     margin: theme.spacing(1),
@@ -43,10 +44,10 @@ const useStyles = makeStyles((theme) => ({
     <div className={classes.root}>
       <AppBar position="fixed">
         <Toolbar className={s.color}>
-          
           <Typography variant="h6" className={classes.title + " " + s.letras + " " + s.espacio}>
             <Link to="/Home"> <img src={imagen} alt="" className={s.imagen}/> </Link> 
           </Typography>
+          <SearchBar/>
          {!!user && (
             <div  className={s.user}>
               <IconButton

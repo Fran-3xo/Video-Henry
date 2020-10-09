@@ -18,6 +18,14 @@ export const alumnosReducer = (state = initialState, action) => {
                 return {
                     ...state,
                 }
+            case alumnosActionTypes.DROP_USER:
+                return {
+                    ...state
+                }
+            case alumnosActionTypes.POST_DIRECTOR:
+                return {
+                    ...state,
+                }
         default:
             return state
     }

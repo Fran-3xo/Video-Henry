@@ -7,13 +7,21 @@ module.exports = (sequelize) => {
         },
         modulo : {
             type: DataTypes.STRING,
-            allowNull: false,
+            allowNull: true,
             validate:{
                 isIn: {
                     args: [['M1', 'M2', 'M3', 'M4']],
                     msg: "Debe pertenecer a algún modulo('M1', 'M2', 'M3', 'M4')"
                 }
             }
+        }, 
+        instructor:{
+            type: DataTypes.STRING,
+            allowNull: true
+        },
+        cohorte:{
+            type: DataTypes.STRING,
+            allowNull: true
         },
         titulo : {
             type: DataTypes.STRING,
@@ -29,7 +37,7 @@ module.exports = (sequelize) => {
         },
         prev_image:{
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: true
         }
     })
 }
