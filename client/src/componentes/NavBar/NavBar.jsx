@@ -47,9 +47,13 @@ const useStyles = makeStyles((theme) => ({
           <Typography variant="h6" className={classes.title + " " + s.letras + " " + s.espacio}>
             <Link to="/Home"> <img src={imagen} alt="" className={s.imagen}/> </Link> 
           </Typography>
-          <SearchBar/>
-         {!!user && (
+          <Typography variant="h6" className={s.nolink} component={Link} to="/AboutUs">
+            AboutUs
+          </Typography>
+          {!!user && (
+          
             <div  className={s.user}>
+            <SearchBar/>
               <IconButton
                 aria-label="account  of current user"
                 aria-controls="menu-appbar"
@@ -82,6 +86,7 @@ const useStyles = makeStyles((theme) => ({
                 {(user.rol==="director" || user.rol==="instructor") && <MenuItem component={Link} to="/Admin">Administración</MenuItem>}
               </Menu>
             </div>
+
           )}
         </Toolbar>
       </AppBar>

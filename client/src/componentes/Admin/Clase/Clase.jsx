@@ -108,6 +108,9 @@ export default function Form () {
                                 <MenuItem value="M2">M2</MenuItem>
                                 <MenuItem value="M3">M3</MenuItem>
                                 <MenuItem value="M4">M4</MenuItem>
+                                <MenuItem value="Workshop">Workshops</MenuItem>
+                                <MenuItem value="Talks">Talks</MenuItem>
+                                <MenuItem value="Otros">Otros</MenuItem>
                             </Select>
                         </FormControl>
                         <TextField 

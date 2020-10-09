@@ -27,12 +27,12 @@ server.get("/search/:query", (req, res, next) =>{
             [Op.or]:[
                 {
                     modulo : {
-                        [Op.iLike]: req.params.query
+                        [Op.iLike]: "%" + req.params.query + "%"
                     },
                 },
                 {
                     titulo:{
-                        [Op.iLike]: req.params.query
+                        [Op.iLike]: "%" + req.params.query + "%"
                     }
                 }
             ]

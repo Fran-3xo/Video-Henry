@@ -1,0 +1,17 @@
+.login{
+    display: flex;
+    margin-top: 15rem;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.botones {
+justify-content: center;
+}
+.linkedin {
+    
+    color: white !important;
+}
+.git {
+    color: white !important;
+}
