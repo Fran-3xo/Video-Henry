@@ -3,6 +3,37 @@
     margin: auto;
 
 }
+.searchBar{
+    margin-left: auto;
+}
+.search{
+    position: relative;
+    background-color: rgba(0,0,0,0.1);
+    width: 100%;
+    border-radius: 2px;
+    margin-top: 6px;
+}
+.search:hover{
+    background-color: rgba(0,0,0,0.2);
+}
+.inputRoot{
+    color:inherit;
+}
+.inputInput{
+    padding: 0.5rem !important;
+    margin-left: 1.5rem !important;
+}
+.inputInput::placeholder{
+    opacity: 0.7 !important;
+}
+.searchIcon{
+    height: 100%;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 3px;
+}
 
 .imagen{
     border: solid 2px black;
@@ -11,7 +42,6 @@
 }
 .alumnos {
     margin-left: 8rem;
-    width: 80%;
 }
 .delete {
     display: flex !important;

@@ -101,8 +101,8 @@ export default function Form () {
                             helperText={!!errorLink.msg && errorLink.msg}
                         />
                         <FormControl variant="outlined" className={`${classes.formControl} ${s.margin}`}>
-                            <InputLabel id="inputSelect">Modulo</InputLabel>
-                            <Select labelId="inputSelect" label="Modulo" onChange={handleModuloChange}>
+                            <InputLabel id="inputSelect">Categoria</InputLabel>
+                            <Select labelId="inputSelect" label="Categoria" onChange={handleModuloChange}>
                                 <MenuItem value="" selected disabled></MenuItem>
                                 <MenuItem value="M1">M1</MenuItem>
                                 <MenuItem value="M2">M2</MenuItem>

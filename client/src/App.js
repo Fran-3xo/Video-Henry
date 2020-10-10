@@ -7,10 +7,11 @@ import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import Login from "./componentes/Login/login";
 import Home from "./componentes/Home/Home";
 import Clases from "./componentes/Clase/Clases"
-import {logIn} from "./store/actions/login";
+import {logIn, fail} from "./store/actions/login";
 import {useDispatch, useSelector} from "react-redux";
 import ClaseDisplay from './componentes/Clase/ClaseDisplay';
 import AboutUs from './componentes/AboutUs/Aboutus';
+import Footer from "./componentes/Footer";
 const theme = createMuiTheme({
   palette: {
     primary: {
@@ -31,9 +32,7 @@ const GithubLogin = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   useEffect(()=>{
-    dispatch(logIn())
-      .then(() => history.push("/Home"))
-      .catch(() => history.push("/"))
+    dispatch(logIn()).then(() => history.push("/Home"))
   },[])
   return(<></>)
 }
@@ -57,13 +56,10 @@ function App() {
         <Route exact path="/github_login">
           <GithubLogin/>
         </Route>
-        <Route exact path="/failure_login">
-          <h1>Usuario NO autarizado</h1>
-        </Route>
         <Route exact path="/Home">
             {!!user?<Home/>:<Redirect to="/"/>}
         </Route>
-        <Route exact path="/modulo/:modulo">
+        <Route exact path="/categoria/:modulo">
            {!!user?<Clases/>:<Redirect to="/"/>}
         </Route>
         <Route path="/search/:query">
@@ -74,6 +70,9 @@ function App() {
         </Route>
         <Route path="/AboutUs">
           <AboutUs/>
+        </Route>
+        <Route path="/">
+          <Footer/>
         </Route>
       </ThemeProvider>
     </div>

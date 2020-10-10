@@ -1,11 +1,7 @@
 .login{
     margin-top: 15rem;
-    width: 400px;
-    height: 300px;
-    margin-left: 30rem;
-    
-
-    
+    display: flex;
+    justify-content: center;   
 }
 
 

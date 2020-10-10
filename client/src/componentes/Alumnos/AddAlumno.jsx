@@ -61,30 +61,32 @@ export default function AddAlumno () {
     })
     const regex = /^[a-z\d](?:[a-z\d]|-(?=[a-z\d])){0,38}$/gim;
     const handleAlumnIput = (e) =>{
-        setAlumnos(e.target.value.trim());
-        if(!!e.target.value.trim()) setError({...error, msg:""})
+        setAlumnos(e.target.value);
+        if(!!alumnos.trim().match(regex) && !!alumnos.trim().match(regex).length) setError({...error, msg:""})
     }
 
     const submit = (e) => {
         e.preventDefault();
-        if(!error.msg && !!alumnos){
-            dispatch(postAlumno(alumnos.match(regex)));
+        if(!error.msg && !!alumnos.trim().match(regex) && !!alumnos.trim().match(regex).length){
+            dispatch(postAlumno(alumnos.trim().match(regex)));
             setAlumnos("");
         }else setError({...error, msg:"Debe ingresar usuario/s"})
     }
     const handleDirector = (e) => {
         e.preventDefault();
-        if(!error.msg && !!alumnos){
+        if(!error.msg && !!alumnos.trim().match(regex) && !!alumnos.trim().match(regex).length){
             dispatch(postDirector(alumnos.match(regex)))
             setAlumnos("");
         }else setError({...error, msg:"Debe ingresar usuario/s"})
     }
     const handleError = (e) => {
         if(!e.target.value.trim()) setError({...error, msg:"Debe ingresar usuario/s"})
+        else if(!alumnos.trim().match(regex)) setError({...error, msg:"Debe ingresar un usuario de GitHub ex: atralice"})
+        else if (!alumnos.trim().match(regex).length) setError({...error, msg:"Debe separar usuarios por Enter"})
     }
     const handleDelete =  (e) => {
         e.preventDefault();
-        if(!error.msg && !!alumnos){
+        if(!error.msg && !!alumnos.trim().match(regex) && !!alumnos.trim().match(regex).length){
             dispatch(dropUser(alumnos.match(regex)))
             setAlumnos("");
         }else setError({...error, msg:"Debe ingresar usuario/s"})
@@ -106,7 +108,6 @@ export default function AddAlumno () {
                         fullWidth
                         label="Alumnos"
                         multiline
-                        autoFocus
                         className={s.margin}
                         onBlur={handleError}
                         onFocus={()=> setError({...error, touched:true})}

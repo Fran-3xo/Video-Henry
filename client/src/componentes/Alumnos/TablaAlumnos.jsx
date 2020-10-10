@@ -1,91 +1,102 @@
-import React,{useEffect} from "react"
+import React,{useEffect, useState} from "react"
 import styles from "./registrarse.module.css"
 import {useSelector, useDispatch} from "react-redux";
-import {getUsuarios} from "../../store/actions/login"
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper,Button, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Container, TextField } from "@material-ui/core";
-import DeleteIcon from '@material-ui/icons/Delete';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
-import { useTheme } from '@material-ui/core/styles';
-import { makeStyles } from '@material-ui/core/styles';
-
+import {getUsuarios, searchUsuarios} from "../../store/actions/login"
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, CircularProgress, IconButton } from "@material-ui/core";
+import BackIcon from '@material-ui/icons/ArrowBackIos';
+import ForwardIcon from '@material-ui/icons/ArrowForwardIos'
+import {InputBase} from '@material-ui/core';
+import {Search} from "@material-ui/icons"
 
 
 export const TablaAlumnos = () => {
-
-const {user: {usuarios}} = useSelector(store  => store);
+const [query, setQuery] = useState("");
+const {user: {usuarios, pag, pags, limit, ActionType}} = useSelector(store  => store);
 const dispatch = useDispatch();
-const [open, setOpen] = React.useState(false);
-const theme = useTheme();
-const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
-
-const handleClickOpen = () => {
-  setOpen(true);
-};
-
-const handleClose = () => {
-  setOpen(false);
-};
-const useStyles = makeStyles((theme) => ({
-    paper: {
-        marginTop: theme.spacing(8),
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-    },
-    avatar: {
-        margin: theme.spacing(1),
-        backgroundColor: theme.palette.secondary.main,
-    },
-    form: {
-        width: '100%',
-        marginTop: theme.spacing(1),
-    },
-    submit: {
-        margin: theme.spacing(3, 0, 2),
-        marginLeft: "8px",
-        backgroundColor: "#ffff00",
-        color: "#000000",
-        
-    },
-    root: {
-        '& > *': {
-            margin: theme.spacing(1),
-        },
-    },
-    input: {
-        display: 'none',
-    },
-}));
-
-
-
 useEffect(()=>{
     dispatch(getUsuarios());
 },[])
-
+useEffect(()=>{
+    if(query)dispatch(searchUsuarios(query));
+},[query])
+const renderUsers = (usuarios) =>{
+    if(!usuarios && !Array.isArray(usuarios)) return (
+        <TableRow>
+            <TableCell colSpan="3" style={{textAlign:"center"}}><CircularProgress /></TableCell>
+        </TableRow>
+    );
+    if(!usuarios.length) return (
+        <TableRow>
+            <TableCell colSpan="3" style={{textAlign:"center"}}>Sin resultados</TableCell>
+        </TableRow>
+    )
+    return usuarios.map(alumno => (
+        <TableRow>
+            <TableCell colSpan="2">
+                {alumno.username}
+            </TableCell>
+            <TableCell>
+                {alumno.rol}
+            </TableCell>
+        </TableRow>
+    ))
+}
+const prevPag = () => {
+    if(ActionType === "GET_USUARIOS") dispatch(getUsuarios(pag - 1))
+    else dispatch(searchUsuarios(query, pag - 1))
+}
+const nextPag = () => {
+    console.log(ActionType)
+    if(ActionType === "GET_USUARIOS") dispatch(getUsuarios(pag + 1))
+    else dispatch(searchUsuarios(query, pag + 1))
+}
 return (
         <div className={styles.alumnos}>
     <TableContainer component={Paper}>
         <Table>
             <TableHead>
-                
-                <TableCell variant="head">
-                    Nombre de usuario
+                <TableCell colSpan="3">
+                    <div className={styles.searchBar}>
+                        <div className={styles.search}>
+                            <div className={styles.searchIcon}>
+                                <Search/>
+                            </div>
+                            <InputBase
+                            placeholder="Buscar Usuario…"
+                            classes={{
+                                root: styles.inputRoot,
+                                input: styles.inputInput,
+                            }}
+                            onChange={(e) => setQuery(e.target.value.trim())}
+                            inputProps={{ 'aria-label': 'search' }}
+                            />
+                        </div>
+                    </div>
+                </TableCell>
+            </TableHead>
+            <TableHead>
+                <TableCell variant="head" colSpan="2">
+                    Usuario
                 </TableCell>
                 <TableCell variant="head">
                     Rol
                 </TableCell>
             </TableHead>
             <TableBody>
-                {!!usuarios && usuarios.map(alumno => (
-                <TableRow>
-                        <TableCell>
-                            {alumno.username}
-                        </TableCell>
-                        <TableCell>
-                            {alumno.rol}
-                        </TableCell>
-                    </TableRow>))}
+                {renderUsers(usuarios)}
+                    {pags > 10 && 
+                        <TableRow>
+                            {pag > 1 && 
+                            <TableCell>
+                                <IconButton onClick={prevPag}><BackIcon/></IconButton>
+                            </TableCell>}
+                            <TableCell>{`${pag} de ${Math.ceil(pags/ limit)}`}</TableCell>
+                            {pag < Math.ceil(pags/ limit) && 
+                            <TableCell>
+                                <IconButton onClick={nextPag}><ForwardIcon/></IconButton>
+                            </TableCell>}
+                        </TableRow>
+                    }
             </TableBody>
         </Table>
     </TableContainer>

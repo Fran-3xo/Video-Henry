@@ -5,12 +5,12 @@ module.exports = (sequelize) => {
             type: DataTypes.INTEGER,
             allowNull: false,
         },
-        modulo : {
+        categoria : {
             type: DataTypes.STRING,
             allowNull: true,
             validate:{
                 isIn: {
-                    args: [['M1', 'M2', 'M3', 'M4','Workshop','Talks','Otros','']],
+                    args: [['M1', 'M2', 'M3', 'M4','Workshop','Talks','Otros']],
                     msg: "Debe pertenecer a algún modulo('M1', 'M2', 'M3', 'M4')"
                 }
             }

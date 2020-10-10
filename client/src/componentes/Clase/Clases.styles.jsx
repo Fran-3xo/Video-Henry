@@ -1,10 +1,13 @@
 import { makeStyles } from '@material-ui/core/styles';
 
 export default makeStyles((theme) => ({
+    grid:{
+        width:"100%"
+    },
     contenedor: {
         margin:"5rem 2rem",
         display: 'flex',
-        flexWrap: 'wrap',
+        flexDirection: "column"
     },
     contenedor_video:{
         display: "flex",
@@ -18,6 +21,9 @@ export default makeStyles((theme) => ({
     media: {
         minWidth: 850,
         maxWidth: "none",
+    },
+    header:{
+        flexDirection: "row-reverse"
     },
     
 botonRegresar: {

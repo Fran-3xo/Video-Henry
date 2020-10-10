@@ -47,9 +47,6 @@ const useStyles = makeStyles((theme) => ({
           <Typography variant="h6" className={classes.title + " " + s.letras + " " + s.espacio}>
             <Link to="/Home"> <img src={imagen} alt="" className={s.imagen}/> </Link> 
           </Typography>
-          <Typography variant="h6" className={s.nolink} component={Link} to="/AboutUs">
-            AboutUs
-          </Typography>
           {!!user && (
           
             <div  className={s.user}>
