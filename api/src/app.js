@@ -7,7 +7,6 @@ const morgan = require('morgan');
 const routes = require('./routes/index.js');
 const passport = require('passport');
 const cors = require('cors');
-const LocalStrategy = require('passport-local').Strategy;
 const GitHubStrategy = require('passport-github2').Strategy;
 const {Usuario, conn} = require('./db.js');
 const { 

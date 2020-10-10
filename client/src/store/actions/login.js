@@ -1,17 +1,27 @@
 import axios from "axios";
 
-
 export const UserActionTypes = {
     LOG_IN: "LOG_IN",
     LOG_OUT:"LOG_OUT",
-    GET_USUARIOS: "GET_USUARIOS"
+    GET_USUARIOS: "GET_USUARIOS",
+    SEARCH_USUARIOS: "SEARCH_USUARIOS",
+    FAIL: "FAIL"
     }
 
-    export const getUsuarios = () => {
+    export const getUsuarios = (pag = 1, limit = 10) => {
         return dispatch => {
-            return axios.get(`http://localhost:3006/user/`,{withCredentials: true})
+            return axios.get(`http://localhost:3006/user/users/${limit}/${pag}`,{withCredentials: true})
             .then(res => {
-                dispatch({type: UserActionTypes.GET_USUARIOS, payload: res.data})
+                dispatch({type: UserActionTypes.GET_USUARIOS, payload: {usuarios: res.data, pag, limit}})
+            })
+            .catch(err => console.log(err))
+        }
+    }
+    export const searchUsuarios = (query, pag=1, limit = 15) => {
+        return dispatch => {
+            return axios.get(`http://localhost:3006/user/search/${query}/${limit}/${pag}`,{withCredentials: true})
+            .then(res => {
+                dispatch({type: UserActionTypes.SEARCH_USUARIOS, payload: {usuarios: res.data, pag, limit}})
             })
             .catch(err => console.log(err))
         }
@@ -20,11 +30,16 @@ export const logIn = () => {
     return (dispatch) => {
         return axios.get("http://localhost:3006/user/me",
         {withCredentials: true}
-        ).then((res) => dispatch({
-            type:UserActionTypes.LOG_IN,
-            payload: res.data
-        })).catch(err => console.log(err));
+        ).then((res) => {
+            dispatch({
+                type:UserActionTypes.LOG_IN,
+                payload: res.data
+            })
+        }).catch(err => dispatch(fail()));
     }
+}
+export const fail = () =>{
+    return {type: UserActionTypes.FAIL}
 }
 export const logOut = () =>{
     return (dispatch) => {

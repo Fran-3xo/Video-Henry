@@ -12,7 +12,7 @@ export default function Admin(){
         <div className={styles.admin}>
             <List subheader={<ListSubheader>Administración</ListSubheader>} className={styles.menu}>
                 <ListItem button component={Link} to={`${match.url}/Clases`}>
-                    <ListItemText>Clases</ListItemText>
+                    <ListItemText>Videos</ListItemText>
                 </ListItem>
                 <ListItem button component={Link} to={`${match.url}/agregar`}>
                     <ListItemText>Usuarios</ListItemText>

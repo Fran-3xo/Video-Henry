@@ -2,13 +2,14 @@ import axios from "axios";
 
 export const ModuloActionTypes = {
     GET_MODULO: 'GET_MODULO',
+    GET_VIDEO: 'GET_VIDEO',
     POST_CLASE: 'POST_CLASE',
     SEARCH_VIDEOS: "SEARCH_VIDEOS"
 };
 
-export const getClasesByModulo = (modulo, pag = 48) => {
+export const getClasesByModulo = (modulo, pag = 1) => {
     return (dispatch) => {
-        return axios.get(`http://localhost:3006/clase/modulo/${modulo}/${pag}`, { withCredentials: true }).then((res) => {
+        return axios.get(`http://localhost:3006/clase/categoria/${modulo}/${pag}`, { withCredentials: true }).then((res) => {
             return dispatch({
                 type: ModuloActionTypes.GET_MODULO,
                 payload: res.data
@@ -29,7 +30,18 @@ export const postClase = (clase) => {
             .catch(err => console.log(err));
     };
 };
-
+export const getVideo = (id) =>{
+    return (dispatch) => {
+        return axios.get(`http://localhost:3006/clase/video/${id}`,{withCredentials:true}
+        ).then((res) => {
+            dispatch({
+                type:ModuloActionTypes.GET_VIDEO,
+                payload:res.data
+            })
+        })
+        .catch(err => console.log(err))
+    }
+}
 export const searchVideos = (query) => {
     return (dispatch) => {
         return axios.get(`http://localhost:3006/clase/search/${query}`,{withCredentials:true}

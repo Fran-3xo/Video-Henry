@@ -20,12 +20,11 @@ export default function Modulo(props) {
     },[query, modulo]);
     return (
         <div className={classes.contenedor}>
-            <GridList cols={max1024?max600?1:2:4} cellHeight={240}>
+            <GridList cols={max1024?max600?1:2:4} cellHeight={240} classes={{root:classes.grid}}>
                 {clases.map(clase =>(
                     <GridListTile component={Link} cols={
                         (()=>{
                             if(!max1024 && !max600){
-                                if(clases.length <= 4) return Math.round(4/(2 * clases.length))
                                 return 1
                             }
                             if(max1024 && !max600){
@@ -41,7 +40,7 @@ export default function Modulo(props) {
                     </GridListTile>
                 ))}
             </GridList>
-            {currents > 48 && (<Button onClick={() => dispatch(getClasesByModulo(modulo, (currents * 2)))}>Ver mas</Button>)}
+            {currents > 48 && (<Button onClick={() => dispatch(getClasesByModulo(modulo,(Math.ceil(clases.length / 48) + 1)))}>Ver mas</Button>)}
         </div>
     );
 }  

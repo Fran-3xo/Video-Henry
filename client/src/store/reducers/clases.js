@@ -4,6 +4,7 @@ import { ModuloActionTypes } from '../actions/clases';
 const initialState = {
     clases: [],
     currents: 0,
+    video:{}
     
 };
 
@@ -18,6 +19,11 @@ export const clasesReducer = (state = initialState, action) => {
         case ModuloActionTypes.POST_CLASE:
             return {
                 ...state,
+            }
+        case ModuloActionTypes.GET_VIDEO:
+            return {
+                ...state,
+                video: action.payload
             }
         case ModuloActionTypes.SEARCH_VIDEOS:
             return {

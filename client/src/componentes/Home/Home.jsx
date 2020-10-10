@@ -43,7 +43,7 @@ export default function Home() {
                 <Grid className={classes.contenedor} container spacing={3}>
                     {images.map((image) =>(
                         <Grid item key={image} xs={8} sm={10} md={5}>
-                            <Link style={{ textDecoration: 'none' }} to={`/modulo/${image.title}/`} modulo={image.modulo} >
+                            <Link style={{ textDecoration: 'none' }} to={`/categoria/${image.title}/`} modulo={image.modulo} >
                                 <ButtonBase key={image.title} className={classes.image} focusVisibleClassName={classes.focusVisible}>
                                     <span
                                         className={classes.imageSrc}

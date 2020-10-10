@@ -1,21 +1,46 @@
 const server = require('express').Router();
 const {Usuario} = require ('../db.js')
 const passport = require('passport');
-const crypto = require("crypto");
+const {Op} = require("sequelize");
 //crear usuario
 //http://localhost:3006/user/
 server.get("/github/login", passport.authenticate("github", { scope: ["user:email"] }));
-server.get("/github/cb", passport.authenticate("github", { failureRedirect: 'http://localhost:3000/failure_login' }), (req, res) => {
+server.get("/github/cb", passport.authenticate("github", { failureRedirect: 'http://localhost:3000/github_login' }), (req, res) => {
 	res.redirect("http://localhost:3000/github_login");
 });
 
-server.get("/", (req, res, next) =>{
-    Usuario.findAll({
+server.get("/users/:limit/:pag", (req, res, next) =>{
+    Usuario.findAndCountAll({
         attributes:["username", "rol"],
         where:{
             active: true
-        }
+        },
+        offset: -(parseInt(req.params.limit) - (parseInt(req.params.limit) * parseInt(req.params.pag))),
+        limit:parseInt(req.params.limit)
     }).then(alumnos => res.json(alumnos))
+        .catch(err => next(err));
+})
+server.get("/search/:query/:limit/:pag", (req, res, next) =>{
+    Usuario.findAndCountAll({
+        attributes:["username", "rol"],
+        where:{
+            active: true,
+            [Op.or]:[
+                {
+                    username:{
+                        [Op.iLike]: "%" + req.params.query + "%"
+                    }    
+                },
+                {
+                    rol:{
+                        [Op.iLike]: "%" + req.params.query + "%"
+                    }    
+                }
+            ]
+        },
+        offset: -(parseInt(req.params.limit) - (parseInt(req.params.limit) * parseInt(req.params.pag))),
+        limit:parseInt(req.params.limit)
+    }).then(usuarios => res.json(usuarios))
         .catch(err => next(err));
 })
 //deslogueo de un usuario
