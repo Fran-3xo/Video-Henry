@@ -2,8 +2,9 @@ const server = require("express").Router();
 const { Clase } = require("../db");
 const {Op} = require("sequelize");
 const axios = require("axios");
+const {isAdmin} = require("./usuarios");
 //crea una clase
-server.post("/", (req, res, next) => {
+server.post("/", isAdmin, (req, res, next) => {
     axios.get("https://vimeo.com/api/oembed.json?url=" + req.body.link +  "&width=1024&height=480")
         .then(res => {
             return Clase.create({

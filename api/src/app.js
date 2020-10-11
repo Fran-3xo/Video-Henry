@@ -12,10 +12,12 @@ const {Usuario, conn} = require('./db.js');
 const { 
   GH_ID,
   GH_SECRET,
+  GH_URL_CB,
+  CLIENT_URL
 } = process.env
 const server = express();
 server.use(cors({
-  origin: "http://localhost:3000",
+  origin: CLIENT_URL,
   credentials: true,
   allowedHeaders: "Authorization, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Allow-Request-Method",
   methods: "GET, POST, OPTIONS, PUT, DELETE",
@@ -24,13 +26,13 @@ server.name = 'API';
 passport.use(new GitHubStrategy({
   clientID: GH_ID,
   clientSecret: GH_SECRET,
-  callbackURL: "http://localhost:3006/user/github/cb",
+  callbackURL: GH_URL_CB,
   scope: ["user:email"]
 },async (accessToken, refreshToken, profile, done) =>{
   console.log(profile);
   try{
     const usuario = await Usuario.findOne({
-      where: { username: profile.username, active: true },
+      where: { username: profile.username},
     })
     if(!usuario) return done(null, false);
     if(!usuario.provider && !usuario.providerId) {
@@ -77,5 +79,4 @@ server.use((err, req, res, next) => { // eslint-disable-line no-unused-vars
   console.error(err);
   return res.status(status).send(message);
 });
-
 module.exports = server;
