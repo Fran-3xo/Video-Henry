@@ -33,6 +33,7 @@ const useStyles = makeStyles({
 
 export default function Login(){
     const classes = useStyles();
+    const {REACT_APP_API_URL} = process.env
     const bull = <span className={classes.bullet}>•</span>;
     const {user:{failure_login}} = useSelector(store => store);
     return(
@@ -53,7 +54,7 @@ export default function Login(){
             </Typography>
           </CardContent>
           <CardActions>
-            <IconButton variant="outlined" href="http://localhost:3006/user/github/login" className={styles.boton} size= "medium"><GitHubIcon/></IconButton>
+            <IconButton variant="outlined" href={`${REACT_APP_API_URL}/user/github/login`} className={styles.boton} size= "medium"><GitHubIcon/></IconButton>
           </CardActions>
         </Card>
         </div>

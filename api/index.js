@@ -18,16 +18,33 @@
 //                       `=---='
 //     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 const server = require('./src/app.js');
-const { conn, Usuario } = require('./src/db.js');
+const { conn, ...models } = require('./src/db.js');
 require('dotenv').config();
-// Syncing all the models at once.
-conn.sync({ force: true }).then(() => {
-  Usuario.create({
-    username: process.env.USER_ADMIN,
-    rol: "director",
-    active: true,
-  })
+const {USER_ADMIN, DEVELOPMENT} = process.env
+conn.sync().then(() => {
+  // Syncing the models.
+  const syncModels = [];
+  if(DEVELOPMENT){
+    for(let model in models){
+       syncModels.push(models[model].sync({force:true}));
+    }
+  }
+  return Promise.all(syncModels)
+}).then(() => {
+  // Creando Administrador
+  return models.Usuario.findOrCreate({
+    where: {
+      username: USER_ADMIN
+    },
+    defaults:{
+      username: USER_ADMIN,
+      rol: "director",
+    },
+  });
+}).then(() => {
   server.listen(3006, () => {
     console.log('%s listening at 3006'); // eslint-disable-line no-console
   });
-});
+}).catch(err => {
+  console.log(err) // eslint-disable-line no-console
+})

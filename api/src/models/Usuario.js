@@ -14,7 +14,8 @@ module.exports = (sequelize) => {
         },
         username:{
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: false,
+            unique:true
         },
         provider: {
             type: DataTypes.STRING,
@@ -23,11 +24,6 @@ module.exports = (sequelize) => {
         providerId: {
             type: DataTypes.STRING,
             allowNull: true
-        },
-        active: {
-            type: DataTypes.BOOLEAN,
-            allowNull: false,
-            defaultValues: true
         },
     })
 }

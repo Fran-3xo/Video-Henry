@@ -9,8 +9,7 @@ export default function Footer(){
             <div className={styles.company}>
                 <Avatar src={logo} component="a" href="https://soyhenry.com"/>
                 <Typography variant="caption" classes={{root:styles.copy}}>
-                    &copy;{new Date().getFullYear()}
-                    &nbsp;&reg;Soy Henry
+                    &copy;{new Date().getFullYear()} Henry
                 </Typography>
             </div>
             <div className={styles.app}>

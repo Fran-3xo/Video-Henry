@@ -2,14 +2,23 @@ const server = require('express').Router();
 const {Usuario} = require ('../db.js')
 const passport = require('passport');
 const {Op} = require("sequelize");
+const {CLIENT_URL} = process.env
 //crear usuario
 //http://localhost:3006/user/
+function isAuth(req, res, next){
+  if(req.isAuthenticated()) return next();
+  return res.sendStatus(401);
+}
+function isAdmin(req, res, next){
+  if(req.user.rol==="director") return next();
+  return res.sendStatus(403);
+}
 server.get("/github/login", passport.authenticate("github", { scope: ["user:email"] }));
-server.get("/github/cb", passport.authenticate("github", { failureRedirect: 'http://localhost:3000/github_login' }), (req, res) => {
-	res.redirect("http://localhost:3000/github_login");
+server.get("/github/cb", passport.authenticate("github", { failureRedirect: CLIENT_URL + '/github_login' }), (req, res) => {
+	res.redirect(CLIENT_URL + "/github_login");
 });
 
-server.get("/users/:limit/:pag", (req, res, next) =>{
+server.get("/users/:limit/:pag", isAuth, isAdmin, (req, res, next) =>{
     Usuario.findAndCountAll({
         attributes:["username", "rol"],
         where:{
@@ -20,7 +29,7 @@ server.get("/users/:limit/:pag", (req, res, next) =>{
     }).then(alumnos => res.json(alumnos))
         .catch(err => next(err));
 })
-server.get("/search/:query/:limit/:pag", (req, res, next) =>{
+server.get("/search/:query/:limit/:pag", isAuth, isAdmin, (req, res, next) =>{
     Usuario.findAndCountAll({
         attributes:["username", "rol"],
         where:{
@@ -50,7 +59,7 @@ server.get('/logout', (req, res) =>{
 	res.sendStatus(200);
 })
 //actualiza el rol de un usuario
-server.put('/:id/rol', (req, res, next) => {
+server.put('/:id/rol', isAuth, isAdmin, (req, res, next) => {
     const { id } = req.params;
     const { rol} = req.body;
     Usuario.update(
@@ -62,9 +71,8 @@ server.put('/:id/rol', (req, res, next) => {
         res.status(200).send(usuario);
     }).catch(next);
 });
-server.get("/me", (req, res, next) =>{
-	if(!req.isAuthenticated()) return res.sendStatus(401);
+server.get("/me", isAuth, (req, res, next) =>{
 	res.json(req.user);
 })
 
-module.exports = server;
+module.exports = {server, isAuth, isAdmin};

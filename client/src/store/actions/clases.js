@@ -1,5 +1,5 @@
 import axios from "axios";
-
+const {REACT_APP_API_URL} = process.env
 export const ModuloActionTypes = {
     GET_MODULO: 'GET_MODULO',
     GET_VIDEO: 'GET_VIDEO',
@@ -9,7 +9,7 @@ export const ModuloActionTypes = {
 
 export const getClasesByModulo = (modulo, pag = 1) => {
     return (dispatch) => {
-        return axios.get(`http://localhost:3006/clase/categoria/${modulo}/${pag}`, { withCredentials: true }).then((res) => {
+        return axios.get(`${REACT_APP_API_URL}/clase/categoria/${modulo}/${pag}`, { withCredentials: true }).then((res) => {
             return dispatch({
                 type: ModuloActionTypes.GET_MODULO,
                 payload: res.data
@@ -19,7 +19,7 @@ export const getClasesByModulo = (modulo, pag = 1) => {
 };
 export const postClase = (clase) => {
     return (dispatch) => {
-        return axios.post(`http://localhost:3006/clase/`,clase,{ withCredentials: true })
+        return axios.post(`${REACT_APP_API_URL}/clase/`,clase,{ withCredentials: true })
             .then(() => {
                 dispatch({
                     type: ModuloActionTypes.POST_MODULO,
@@ -32,7 +32,7 @@ export const postClase = (clase) => {
 };
 export const getVideo = (id) =>{
     return (dispatch) => {
-        return axios.get(`http://localhost:3006/clase/video/${id}`,{withCredentials:true}
+        return axios.get(`${REACT_APP_API_URL}/clase/video/${id}`,{withCredentials:true}
         ).then((res) => {
             dispatch({
                 type:ModuloActionTypes.GET_VIDEO,
@@ -44,7 +44,7 @@ export const getVideo = (id) =>{
 }
 export const searchVideos = (query) => {
     return (dispatch) => {
-        return axios.get(`http://localhost:3006/clase/search/${query}`,{withCredentials:true}
+        return axios.get(`${REACT_APP_API_URL}/clase/search/${query}`,{withCredentials:true}
         ).then((res) => {
             dispatch({
                 type:ModuloActionTypes.SEARCH_VIDEOS,

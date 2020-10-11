@@ -135,7 +135,7 @@ export default function AddAlumno () {
                             className={classes.submit}
                             onClick= {(e)=> handleDelete(e)}
                             >
-                            Eliminar Alumnos
+                            Eliminar Usuarios
                         </Button>
                         <Button
                             type="submit"

@@ -12,7 +12,6 @@ server.post('/agregar', (req, res, next) => {
         return Usuario.create({
             username: user,
             rol: 'alumno',
-            active: true,
         })
     })
     Promise.all(addUsers).then(() => res.send('OK'))
@@ -36,16 +35,14 @@ server.post('/agregar', (req, res, next) => {
 }) */
 
 server.put ("/delete", (req,res,next) => {
-    const putAlumno= req.body.users.map((usuarios)=>{
-        return Usuario.update({
-            active: false
-        }, {
+    console.log(req.isAuthenticated())
+    Usuario.destroy({
             where: {
-                username: usuarios
+                username: {
+                    [Op.in]: req.body.users.filter(user => user !== req.user.username)
+                }
             }
-        })
-    })
-    Promise.all(putAlumno).then(()=> res.send("USUARIO ELIMINADO"))
+        }).then((usuarios)=> res.json(usuarios))
     .catch(err => next(err))
 })
 
@@ -57,7 +54,6 @@ server.post('/agregar/director', (req, res, next) => {
             defaults:{
                 username: email,
                 rol: 'director',
-                active: true,
             }
         })
     })
