@@ -34,14 +34,16 @@ DB_PASSWORD={Your postgreSQL password}
 DB_HOST=localhost
 GH_ID={client_id github}
 GH_SECRET={client_secret github}
+GH_URL_CB={url callback para autencitacion satisfactoria de github}
+CLIENT_URL={url del servidor de front-end}
+USER_ADMIN={usuario de github para administrar la app}
+DEVELOPMENT={estado del proyector (en desarrollo -> true)}
+```
+- Crear un archivo `.env ` dentro de la carpeta `client`, el archivo debe contener lo siguiente:
 
 ```
-
-Para administrar la pagina debes colocar tu usuario de github en el archivo .env de la siguiente manero:
-```
-USER_ADMIN={usuario de github}
+REACT_APP_API_URL={url del servidor de la api}
 
 ```
-
 Para agregar a un video, deberas ir a la seccion `Admin` luego hacer click en `Clases`, alli podras agregar un video utilizando su `url` ex: `https://vimeo.com/{video_id}`.
 Para agregar a un usuario, deberas ir a la seccion `Admin` luego hacer click en `Usuarios`, alli podras agregar un usuario utilizando su `username` de github.
