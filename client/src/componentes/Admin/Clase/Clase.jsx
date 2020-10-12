@@ -81,10 +81,6 @@ export default function Form () {
             ...inputs,
             [e.target.name]:e.target.value
         })
-        const handleDelete = (e) => {
-            e.preventDefault()
-            dispatch(dropVideos(videos))
-        }
     }
     return (
         <div>
@@ -153,14 +149,6 @@ export default function Form () {
                             className={classes.submit}
                             >
                             Agregar video
-                        </Button>
-                        <Button
-                            fullWidth
-                            variant="contained"
-                            className={classes.submit}
-                            onClick= {(e)=> handleDelete(e)}
-                            >
-                            Eliminar video
                         </Button>
                 </form>
             </Container>

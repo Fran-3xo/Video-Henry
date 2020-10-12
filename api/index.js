@@ -42,8 +42,8 @@ conn.sync().then(() => {
     },
   });
 }).then(() => {
-  server.listen(3006, () => {
-    console.log('%s listening at 3006'); // eslint-disable-line no-console
+  server.listen(3001, () => {
+    console.log('%s listening at 3001'); // eslint-disable-line no-console
   });
 }).catch(err => {
   console.log(err) // eslint-disable-line no-console
