@@ -41,7 +41,7 @@ const classes = useStyles();
           <Typography variant="h3">Henry App videos</Typography>
           <Typography variant="h5" className={classes.aboutDes}>
             Aplicación desarrollada a a partir del proyecto Henry App del Grupo de Alumnos 05 del cohorte WEB_FT03
-            <br/>(Edinson Rosario, Francis Ricle, Franco Troncoso, Lautaro Mondeti, Nahue Russo, Nicolas Calliet, Emiliano Chequer(PM))
+            <br/>(Edinson Rosario, Francis Ricle, Franco Troncoso, Lautaro Mondati, Nahuel Russo, Nicolas Caillet, Emiliano Chequer(PM))
           </Typography>
           <Divider/>
           <Typography variant="h4" className={classes.devsTitle}>Desarrolladores</Typography>

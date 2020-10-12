@@ -5,7 +5,7 @@ import {Alert} from '@material-ui/lab';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import {useDispatch, useSelector} from "react-redux";
-import {postClase, closeAlerts} from "../../../store/actions/clases"
+import {postClase, closeAlerts, dropVideos } from "../../../store/actions/clases"
 const useStyles = makeStyles((theme) => ({
     paper: {
         marginTop: theme.spacing(8),
@@ -81,6 +81,10 @@ export default function Form () {
             ...inputs,
             [e.target.name]:e.target.value
         })
+        const handleDelete = (e) => {
+            e.preventDefault()
+            dispatch(dropVideos(videos))
+        }
     }
     return (
         <div>
@@ -149,6 +153,14 @@ export default function Form () {
                             className={classes.submit}
                             >
                             Agregar video
+                        </Button>
+                        <Button
+                            fullWidth
+                            variant="contained"
+                            className={classes.submit}
+                            onClick= {(e)=> handleDelete(e)}
+                            >
+                            Eliminar video
                         </Button>
                 </form>
             </Container>
