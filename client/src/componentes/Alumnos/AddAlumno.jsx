@@ -1,17 +1,13 @@
 import React, { useState } from "react";
-import axios from 'axios';
 import s from "./registrarse.module.css"
-import { Button, CssBaseline, TextField, FormHelperText } from '@material-ui/core';
-import {Link, useRouteMatch, Route} from "react-router-dom"
-import Box from '@material-ui/core/Box';
-import Typography from '@material-ui/core/Typography';
+import { Button, TextField, Snackbar } from '@material-ui/core';
+import {Alert} from '@material-ui/lab';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import { IconButton, Chip } from '@material-ui/core';
-import { useHistory } from "react-router-dom";
+import { Chip } from '@material-ui/core';
 import {postAlumno} from "../../store/actions/alumnos"
-import {useDispatch} from "react-redux";
-import {getAlumnos, dropUser, postDirector} from "../../store/actions/alumnos"
+import {useDispatch, useSelector} from "react-redux";
+import { dropUser, postDirector, closeAlerts} from "../../store/actions/alumnos"
 
 
 const useStyles = makeStyles((theme) => ({
@@ -48,13 +44,9 @@ const useStyles = makeStyles((theme) => ({
 
 export default function AddAlumno () {
     const dispatch = useDispatch();
-    const match = useRouteMatch();
     const classes = useStyles();
+    const {alumnos: {success, success_msg, err_msg}} = useSelector(store => store);
     const [alumnos, setAlumnos] = useState("");
-    const [dropped, setDropped] = useState({
-        open: false,
-        alumnoId: ""
-    });
     const [error, setError] = useState({
         touched:false,
         msg:""
@@ -95,6 +87,12 @@ export default function AddAlumno () {
     };
     return (
         <div>
+            <Snackbar open={!!err_msg} anchorOrigin={{vertical:"top", horizontal:"center"}}>
+                <Alert variant="filled" severity="error" onClose={() => dispatch(closeAlerts())}>{err_msg}</Alert>
+            </Snackbar>
+            <Snackbar open={success} anchorOrigin={{vertical:"top", horizontal:"center"}}>
+                <Alert variant="filled" severity="success" onClose={() => dispatch(closeAlerts())}>{success_msg}</Alert>
+            </Snackbar>
             <h3>Agregá o elimina</h3>
             <Container component="main" maxWidth="xs">
                 <form className={classes.form} noValidate>

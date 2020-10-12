@@ -17,7 +17,7 @@ const {
 } = process.env
 const server = express();
 server.use(cors({
-  origin: CLIENT_URL,
+  origin: `${CLIENT_URL}`,
   credentials: true,
   allowedHeaders: "Authorization, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Allow-Request-Method",
   methods: "GET, POST, OPTIONS, PUT, DELETE",
@@ -76,7 +76,8 @@ server.use('/', routes);
 server.use((err, req, res, next) => { // eslint-disable-line no-unused-vars
   const status = err.status || 500;
   const message = err.message || err;
-  console.error(err);
+  console.error(err.code);
+  if(err.original.code = "23505") return res.status(status).send("Ya existe un registro con esos datos!!!")
   return res.status(status).send(message);
 });
 module.exports = server;

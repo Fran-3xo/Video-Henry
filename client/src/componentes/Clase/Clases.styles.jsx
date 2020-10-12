@@ -9,6 +9,9 @@ export default makeStyles((theme) => ({
         display: 'flex',
         flexDirection: "column"
     },
+    loading:{
+        margin:"auto"
+    },
     contenedor_video:{
         display: "flex",
         margin:"5rem 2rem",

@@ -30,6 +30,16 @@ server.get("/video/:id", (req, res, next) =>{
         .then(clase => res.json(clase))
         .catch(err => next(err));
 });
+server.get("/videos/:pag/:limit", (req, res, next) =>{
+    Clase.findAndCountAll({
+        attributes:["video_id","titulo"],
+        order:[["updatedAt","DESC"]],
+        offset: -(parseInt(req.params.limit) - (parseInt(req.params.limit) * parseInt(req.params.pag))),
+        limit:parseInt(req.params.limit)
+    })
+        .then(clase => res.json(clase))
+        .catch(err => next(err));
+});
 //trae la clase por query
 server.get("/search/:query", (req, res, next) =>{
     Clase.findAll({
@@ -47,6 +57,45 @@ server.get("/search/:query", (req, res, next) =>{
                 }
             ]
         }
+    })
+        .then(clase => res.json(clase))
+        .catch(err => next(err));
+});
+server.put("/delete", isAdmin, (req, res, next) =>{
+    Clase.destroy({
+        where:{
+            video_id:{
+                [Op.in]: req.body.videos
+            }
+        }
+    }).then(() => res.sendStatus(200))
+    .catch(err => next(err));
+})
+server.get("/search_admin/:query/:pag/:limit", (req, res, next) =>{
+    Clase.findAndCountAll({
+        attributes:["video_id","titulo"],
+        where:{
+            [Op.or]:[
+                {
+                    categoria : {
+                        [Op.iLike]: "%" + req.params.query + "%"
+                    },
+                },
+                {
+                    titulo:{
+                        [Op.iLike]: "%" + req.params.query + "%"
+                    }
+                },
+                {
+                    video_id:{
+                        [Op.iLike]: "%" + req.params.query + "%"
+                    }
+                }
+            ]
+        },
+        order:[["updatedAt","DESC"]],
+        offset: -(parseInt(req.params.limit) - (parseInt(req.params.limit) * parseInt(req.params.pag))),
+        limit:parseInt(req.params.limit)
     })
         .then(clase => res.json(clase))
         .catch(err => next(err));

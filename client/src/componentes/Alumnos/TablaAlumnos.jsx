@@ -14,10 +14,11 @@ const [query, setQuery] = useState("");
 const {user: {usuarios, pag, pags, limit, ActionType}} = useSelector(store  => store);
 const dispatch = useDispatch();
 useEffect(()=>{
-    dispatch(getUsuarios());
+    dispatch(getUsuarios()); // eslint-disable-next-line
 },[])
 useEffect(()=>{
-    if(query)dispatch(searchUsuarios(query));
+    if(query)dispatch(searchUsuarios(query)); // eslint-disable-next-line
+    else dispatch(getUsuarios()); // eslint-disable-next-line
 },[query])
 const renderUsers = (usuarios) =>{
     if(!usuarios && !Array.isArray(usuarios)) return (

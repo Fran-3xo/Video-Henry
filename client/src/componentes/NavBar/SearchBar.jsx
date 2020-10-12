@@ -1,32 +1,19 @@
-import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
-import styles from './navbar.module.css'
+import React from 'react';
 import {InputBase} from '@material-ui/core';
 import {Search} from "@material-ui/icons"
-export default function SearchBar(){
-    const history = useHistory();
-    const search = (e)=>{
-        if(e.key === "Enter" && !!e.target.value.trim()){
-            
-            //history.replace("/search/"+e.target.value.trim())
-            history.replace("/search/"+e.target.value.trim())
-
-        }
-    }
+export default function SearchBar({placeholder, onKeyPress, onChange, searchBarClass, searchClass, iconClass, classes}){
     return(
-        <div className={styles.searchBar}>
-            <div className={styles.search}>
-                <div className={styles.searchIcon}>
+        <div className={searchBarClass}>
+            <div className={searchClass}>
+                <div className={iconClass}>
                     <Search/>
                 </div>
                 <InputBase
-                placeholder="Buscar…"
-                classes={{
-                    root: styles.inputRoot,
-                    input: styles.inputInput,
-                }}
+                placeholder={placeholder}
+                classes={classes}
                 inputProps={{ 'aria-label': 'search' }}
-                onKeyPress={search}
+                onKeyPress={onKeyPress}
+                onChange={onChange}
                 />
           </div>
         </div>
