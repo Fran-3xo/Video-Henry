@@ -13,7 +13,8 @@ export default function Footer(){
                 </Typography>
             </div>
             <div className={styles.app}>
-                <Link variant="subtitle2" className={styles.about} component={RouterLink} to="/About">About</Link>
+                <Typography variant="subtitle1">Henry App Video Grupo 05</Typography>
+                <Link variant="subtitle2" className={styles.about} component={RouterLink} to="/About">About Us</Link>
             </div>
         </div>
     )

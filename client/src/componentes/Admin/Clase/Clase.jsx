@@ -85,7 +85,7 @@ export default function Form () {
     return (
         <div>
             <Snackbar open={!!errMsg} anchorOrigin={{vertical:"top", horizontal:"center"}}>
-                <Alert variant="filled" severity="error" onClose={() => dispatch(closeAlerts())}>{errMsg}</Alert>
+                <Alert variant="filled" severity="error" onClose={() => dispatch(closeAlerts())}>No se ha podido agregar el video</Alert>
             </Snackbar>
             <Snackbar open={success} anchorOrigin={{vertical:"top", horizontal:"center"}}>
                 <Alert variant="filled" severity="success" onClose={() => dispatch(closeAlerts())}>Video Agredado Correctamente</Alert>
