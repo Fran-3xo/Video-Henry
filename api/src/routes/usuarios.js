@@ -21,9 +21,7 @@ server.get("/github/cb", passport.authenticate("github", { failureRedirect: CLIE
 server.get("/users/:limit/:pag", isAuth, isAdmin, (req, res, next) =>{
     Usuario.findAndCountAll({
         attributes:["username", "rol"],
-        where:{
-            active: true
-        },
+        order:[["updatedAt","DESC"]],
         offset: -(parseInt(req.params.limit) - (parseInt(req.params.limit) * parseInt(req.params.pag))),
         limit:parseInt(req.params.limit)
     }).then(alumnos => res.json(alumnos))
@@ -33,7 +31,6 @@ server.get("/search/:query/:limit/:pag", isAuth, isAdmin, (req, res, next) =>{
     Usuario.findAndCountAll({
         attributes:["username", "rol"],
         where:{
-            active: true,
             [Op.or]:[
                 {
                     username:{
@@ -47,6 +44,7 @@ server.get("/search/:query/:limit/:pag", isAuth, isAdmin, (req, res, next) =>{
                 }
             ]
         },
+        order:[["updatedAt","DESC"]],
         offset: -(parseInt(req.params.limit) - (parseInt(req.params.limit) * parseInt(req.params.pag))),
         limit:parseInt(req.params.limit)
     }).then(usuarios => res.json(usuarios))

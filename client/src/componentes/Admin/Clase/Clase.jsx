@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import axios from 'axios';
 import s from "./registrarse.module.css"
-import { Button, TextField, FormControl, Select, MenuItem, InputLabel, FormHelperText } from '@material-ui/core';
+import { Button, TextField, FormControl, Select, MenuItem, InputLabel, Snackbar } from '@material-ui/core';
+import {Alert} from '@material-ui/lab';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import {useDispatch} from "react-redux";
-import {postClase} from "../../../store/actions/clases"
+import {useDispatch, useSelector} from "react-redux";
+import {postClase, closeAlerts} from "../../../store/actions/clases"
 const useStyles = makeStyles((theme) => ({
     paper: {
         marginTop: theme.spacing(8),
@@ -45,6 +45,7 @@ export default function Form () {
     const classes = useStyles();
     const [modulo, setModulo] = useState("")
     const dispatch = useDispatch();
+    const {clases : {errMsg, success}} = useSelector(store => store);
     const [link, setLink] = useState("")
     const [errorLink, setErrorLink] = useState({
         touched:false,
@@ -83,6 +84,12 @@ export default function Form () {
     }
     return (
         <div>
+            <Snackbar open={!!errMsg} anchorOrigin={{vertical:"top", horizontal:"center"}}>
+                <Alert variant="filled" severity="error" onClose={() => dispatch(closeAlerts())}>{errMsg}</Alert>
+            </Snackbar>
+            <Snackbar open={success} anchorOrigin={{vertical:"top", horizontal:"center"}}>
+                <Alert variant="filled" severity="success" onClose={() => dispatch(closeAlerts())}>Video Agredado Correctamente</Alert>
+            </Snackbar>
             <Container component="main" maxWidth="xs">
                 <form className={classes.form} onSubmit={handleSubmit}>
                         <TextField

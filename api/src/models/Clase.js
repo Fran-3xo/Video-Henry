@@ -2,8 +2,9 @@ const {DataTypes} = require ("sequelize")
 module.exports = (sequelize) => {
     const Clase = sequelize.define ('clase', {
         video_id:{
-            type: DataTypes.INTEGER,
+            type: DataTypes.STRING,
             allowNull: false,
+            unique:true
         },
         categoria : {
             type: DataTypes.STRING,

@@ -1,13 +1,13 @@
 import React, {useEffect} from 'react';
 import './App.css';
-import {Route, Redirect, useHistory, useRouteMatch, useLocation} from "react-router-dom";
+import {Route, Redirect, useHistory, } from "react-router-dom";
 import NavBar from "./componentes/NavBar/NavBar";
 import Admin from "./componentes/Admin/Admin";
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import Login from "./componentes/Login/login";
 import Home from "./componentes/Home/Home";
 import Clases from "./componentes/Clase/Clases"
-import {logIn, fail} from "./store/actions/login";
+import {logIn} from "./store/actions/login";
 import {useDispatch, useSelector} from "react-redux";
 import ClaseDisplay from './componentes/Clase/ClaseDisplay';
 import AboutUs from './componentes/AboutUs/Aboutus';
@@ -32,7 +32,7 @@ const GithubLogin = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   useEffect(()=>{
-    dispatch(logIn()).then(() => history.push("/Home"))
+    dispatch(logIn()).then(() => history.push("/Home")) // eslint-disable-next-line
   },[])
   return(<></>)
 }
@@ -68,7 +68,7 @@ function App() {
         <Route exact path="/video/:video_id">
            {!!user?<ClaseDisplay/>:<Redirect to="/"/>}
         </Route>
-        <Route path="/AboutUs">
+        <Route path="/About">
           <AboutUs/>
         </Route>
         <Route path="/">

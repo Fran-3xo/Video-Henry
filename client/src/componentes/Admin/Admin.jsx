@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React  from 'react';
 import styles from "./admin.module.css";
 import { Link, useRouteMatch, Route } from 'react-router-dom';
 import { List, ListItem, ListSubheader, ListItemText } from '@material-ui/core'
 import AddAlumno from "../Alumnos/AddAlumno"
 import Clase from "./Clase/Clase";
+import TablaVideos from "./Clase/TablaVideos";
 import { TablaAlumnos } from '../Alumnos/TablaAlumnos';
 
 export default function Admin(){
@@ -20,6 +21,7 @@ export default function Admin(){
             </List>
             <Route exact path={`${match.path}/Clases`}>
                 <Clase/>
+                <TablaVideos/>
             </Route>
             <Route path={`${match.path}/agregar`}>
                 <AddAlumno/>

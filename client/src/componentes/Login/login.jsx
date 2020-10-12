@@ -34,7 +34,6 @@ const useStyles = makeStyles({
 export default function Login(){
     const classes = useStyles();
     const {REACT_APP_API_URL} = process.env
-    const bull = <span className={classes.bullet}>•</span>;
     const {user:{failure_login}} = useSelector(store => store);
     return(
         <div className={styles.login}>
