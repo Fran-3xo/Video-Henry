@@ -12,12 +12,20 @@ export default function Modulo(props) {
     const max600 =useMediaQuery("(max-width:600px)")
     const { modulo, query } = useParams();
     const dispatch = useDispatch();
-    const {clases: {clases, currents}} = useSelector(store => store);
+    const {clases: {clases, currents, ActionType}} = useSelector(store => store);
     useEffect(()=>{
         if(!!modulo)dispatch(getClasesByModulo(modulo)); // eslint-disable-next-line
         if(!!query) dispatch(searchVideos(query)); // eslint-disable-next-line
         // eslint-disable-next-line
     },[query, modulo]);
+    const seeMore = () => {
+        if (ActionType === "GET_MODULO")
+        dispatch(getClasesByModulo(modulo,(Math.ceil(clases.length / 48) + 1)))
+        else {
+            dispatch(searchVideos(query,(Math.ceil(clases.length / 48) + 1)))
+        }
+    }
+
     const renderVideos = (videos) =>{
         if(videos === null) return(
             <div className={classes.contenedor}>
@@ -39,7 +47,7 @@ export default function Modulo(props) {
                         </GridListTile>
                     ))}
                 </GridList>
-                {currents > 48 && (<Button onClick={() => dispatch(getClasesByModulo(modulo,(Math.ceil(clases.length / 48) + 1)))}>Ver mas</Button>)}
+                {currents > 48 && (<Button onClick={() => seeMore()}>Ver mas</Button>)}
             </div>
         )
     }

@@ -41,8 +41,8 @@ server.get("/videos/:pag/:limit", (req, res, next) =>{
         .catch(err => next(err));
 });
 //trae la clase por query
-server.get("/search/:query", (req, res, next) =>{
-    Clase.findAll({
+server.get("/search/:query/:limit", (req, res, next) =>{
+    Clase.findAndCountAll({
         where:{
             [Op.or]:[
                 {
@@ -56,7 +56,8 @@ server.get("/search/:query", (req, res, next) =>{
                     }
                 }
             ]
-        }
+        },
+        limit:48 * parseInt(req.params.limit)
     })
         .then(clase => res.json(clase))
         .catch(err => next(err));

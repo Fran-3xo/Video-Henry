@@ -92,9 +92,9 @@ export const searchVideosAdmin = (query, pag=1,limit=10) => {
         .catch(err => console.log(err))
     }
 }
-export const searchVideos = (query) => {
+export const searchVideos = (query, limit) => {
     return (dispatch) => {
-        return axios.get(`${REACT_APP_API_URL}/clase/search/${query}`,{withCredentials:true}
+        return axios.get(`${REACT_APP_API_URL}/clase/search/${query}/${limit}`,{withCredentials:true}
         ).then((res) => {
             dispatch({
                 type:ModuloActionTypes.SEARCH_VIDEOS,

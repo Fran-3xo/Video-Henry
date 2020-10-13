@@ -20,7 +20,9 @@ export const clasesReducer = (state = initialState, action) => {
             return {
                 ...state,
                 clases: action.payload.rows,
-                currents: action.payload.count
+                currents: action.payload.count,
+                ActionType: action.type
+                
             }
         case ModuloActionTypes.POST_CLASE:
             return {
@@ -44,7 +46,9 @@ export const clasesReducer = (state = initialState, action) => {
         case ModuloActionTypes.SEARCH_VIDEOS:
             return {
                 ...state,
-                videos: action.payload,
+                clases: action.payload.rows,
+                currents: action.payload.count,
+                ActionType: action.type
             }
         case ModuloActionTypes.SEARCH_VIDEOS_ADMIN:
             return {
