@@ -9,7 +9,8 @@ export const ModuloActionTypes = {
     SEARCH_VIDEOS_ADMIN: "SEARCH_VIDEOS_ADMIN",
     DROP_VIDEO: "DROP_VIDEO",
     ERROR_VIDEO_ACTION : "ERROR_VIDEO_ACTION",
-    CLOSE_ALERTS : "CLOSE_ALERT"
+    CLOSE_ALERTS : "CLOSE_ALERT",
+    FETCHING_VIDEOS: "FETCHING_VIDEOS"
 };
 export const errorVideoAction = (error) => {
     return {
@@ -22,14 +23,24 @@ export const closeAlerts = () =>{
         type: ModuloActionTypes.CLOSE_ALERTS
     }
 }
-export const getClasesByModulo = (modulo, pag = 1) => {
+export const getClasesByModulo = (modulo, pag = 1, limit=48) => {
     return (dispatch) => {
-        return axios.get(`${REACT_APP_API_URL}/clase/categoria/${modulo}/${pag}`, { withCredentials: true }).then((res) => {
-            return dispatch({
-                type: ModuloActionTypes.GET_MODULO,
-                payload: res.data,
-            });
-        }).catch(err => console.log(err));
+        return axios.get(`${REACT_APP_API_URL}/clase/categoria/${modulo}/${pag}/${limit}`, 
+        { 
+            withCredentials: true,
+            onDownloadProgress: () =>{
+                dispatch({
+                    type: ModuloActionTypes.FETCHING_VIDEOS,
+                    payload: true
+                })
+            }
+        })
+            .then((res) => {
+                return dispatch({
+                    type: ModuloActionTypes.GET_MODULO,
+                    payload: {...res.data, moreVideos:pag>1, pag, limit},
+                });
+            }).catch(err => console.log(err));
     };
 };
 export const getVideos = (pag=1,limit=10) =>{
@@ -86,19 +97,28 @@ export const searchVideosAdmin = (query, pag=1,limit=10) => {
         ).then((res) => {
             dispatch({
                 type:ModuloActionTypes.SEARCH_VIDEOS_ADMIN,
-                payload:{videos:res.data, pag, limit}
+                payload:{videos:res.data, pag, limit, }
             })
         })
         .catch(err => console.log(err))
     }
 }
-export const searchVideos = (query, limit) => {
+export const searchVideos = (query, pag=1,limit=48) => {
     return (dispatch) => {
-        return axios.get(`${REACT_APP_API_URL}/clase/search/${query}/${limit}`,{withCredentials:true}
+        return axios.get(`${REACT_APP_API_URL}/clase/search/${query}/${pag}/${limit}`,
+        {
+            withCredentials:true,
+            onDownloadProgress: () =>{
+                dispatch({
+                    type: ModuloActionTypes.FETCHING_VIDEOS,
+                    payload: true
+                })
+            }
+        }
         ).then((res) => {
             dispatch({
                 type:ModuloActionTypes.SEARCH_VIDEOS,
-                payload:res.data
+                payload:{...res.data, moreVideos:pag>1, pag, limit}
             })
         })
         .catch(err => console.log(err))
