@@ -12,18 +12,17 @@ export default function Modulo(props) {
     const max600 =useMediaQuery("(max-width:600px)")
     const { modulo, query } = useParams();
     const dispatch = useDispatch();
-    const {clases: {clases, currents, ActionType}} = useSelector(store => store);
+    const {clases: {clases, pags, ActionType, limit_show, currents, fetching_videos}} = useSelector(store => store);
     useEffect(()=>{
         if(!!modulo)dispatch(getClasesByModulo(modulo)); // eslint-disable-next-line
         if(!!query) dispatch(searchVideos(query)); // eslint-disable-next-line
         // eslint-disable-next-line
     },[query, modulo]);
     const seeMore = () => {
-        if (ActionType === "GET_MODULO")
-        dispatch(getClasesByModulo(modulo,(Math.ceil(clases.length / 48) + 1)))
-        else {
-            dispatch(searchVideos(query,(Math.ceil(clases.length / 48) + 1)))
-        }
+        if (ActionType === "GET_MODULO" && !!modulo)
+            dispatch(getClasesByModulo(modulo, pags + 1, limit_show))
+        else if(!!query) dispatch(searchVideos(query, pags + 1, limit_show))
+    
     }
 
     const renderVideos = (videos) =>{
@@ -47,7 +46,8 @@ export default function Modulo(props) {
                         </GridListTile>
                     ))}
                 </GridList>
-                {currents > 48 && (<Button onClick={() => seeMore()}>Ver mas</Button>)}
+                {fetching_videos && <CircularProgress classes={{root:classes.loading}}/>}
+                {(videos.length < currents) && (<Button onClick={() => seeMore()}>Ver mas</Button>)}
             </div>
         )
     }

@@ -3,25 +3,35 @@ import { ModuloActionTypes } from '../actions/clases';
 
 const initialState = {
     clases: null,
-    currents: 0,
+    pags: 1,
+    limit_show: 48,
     video:"pending",
     videos: null,
     ActionType:"",
     pag: 1,
     limit: 10,
+    fetching_videos:false,
     errMsg: null,
-    success: false
+    success: false,
 
 };
 
 export const clasesReducer = (state = initialState, action) => {
     switch (action.type) {
+        case ModuloActionTypes.FETCHING_VIDEOS:
+            return{
+                ...state,
+                fetching_videos: action.payload
+            }
         case ModuloActionTypes.GET_MODULO:
             return {
                 ...state,
-                clases: action.payload.rows,
+                clases: action.payload.moreVideos?state.clases.concat(action.payload.rows):action.payload.rows,
                 currents: action.payload.count,
-                ActionType: action.type
+                ActionType: action.type,
+                pags: action.payload.pag,
+                fetching_videos: false,
+                limit_show: action.payload.limit
                 
             }
         case ModuloActionTypes.POST_CLASE:
@@ -46,9 +56,12 @@ export const clasesReducer = (state = initialState, action) => {
         case ModuloActionTypes.SEARCH_VIDEOS:
             return {
                 ...state,
-                clases: action.payload.rows,
+                clases: action.payload.moreVideos?state.clases.concat(action.payload.rows):action.payload.rows,
                 currents: action.payload.count,
-                ActionType: action.type
+                ActionType: action.type,
+                pags: action.payload.pag,
+                fetching_videos: false,
+                limit_show: action.payload.limit
             }
         case ModuloActionTypes.SEARCH_VIDEOS_ADMIN:
             return {

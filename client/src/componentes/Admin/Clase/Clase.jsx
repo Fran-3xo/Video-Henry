@@ -5,7 +5,7 @@ import {Alert} from '@material-ui/lab';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import {useDispatch, useSelector} from "react-redux";
-import {postClase, closeAlerts, dropVideos } from "../../../store/actions/clases"
+import {postClase, closeAlerts} from "../../../store/actions/clases"
 const useStyles = makeStyles((theme) => ({
     paper: {
         marginTop: theme.spacing(8),

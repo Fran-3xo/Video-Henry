@@ -41,7 +41,7 @@ server.get("/videos/:pag/:limit", (req, res, next) =>{
         .catch(err => next(err));
 });
 //trae la clase por query
-server.get("/search/:query/:limit", (req, res, next) =>{
+server.get("/search/:query/:pag/:limit", (req, res, next) =>{
     Clase.findAndCountAll({
         where:{
             [Op.or]:[
@@ -57,7 +57,8 @@ server.get("/search/:query/:limit", (req, res, next) =>{
                 }
             ]
         },
-        limit:48 * parseInt(req.params.limit)
+        offset: -(parseInt(req.params.limit) - (parseInt(req.params.limit) * parseInt(req.params.pag))),
+        limit:parseInt(req.params.limit)
     })
         .then(clase => res.json(clase))
         .catch(err => next(err));
@@ -101,12 +102,13 @@ server.get("/search_admin/:query/:pag/:limit", (req, res, next) =>{
         .then(clase => res.json(clase))
         .catch(err => next(err));
 });
-server.get("/categoria/:modulo/:limit", (req, res, next) => {
+server.get("/categoria/:modulo/:pag/:limit", (req, res, next) => {
     Clase.findAndCountAll({
         where: {
             categoria: req.params.modulo
         },
-        limit:48 * parseInt(req.params.limit)
+        offset: -(parseInt(req.params.limit) - (parseInt(req.params.limit) * parseInt(req.params.pag))),
+        limit:parseInt(req.params.limit)
     }).then(clase => res.json(clase))
         .catch(err => next(err));
 });
