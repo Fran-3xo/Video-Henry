@@ -53,6 +53,15 @@ export const userReducer = (state = initialState, action) => {
                 limit: action.payload.limit,
                 ActionType: UserActionTypes.SEARCH_USUARIOS
             }
+        case UserActionTypes.POSTING_DROPPING_USERS:
+            return {
+                ...state,
+                usuarios: null,
+                pag: 1,
+                pags: 0,
+                limit: 10,
+                ActionType: "", 
+            }
         default:
             return state
             

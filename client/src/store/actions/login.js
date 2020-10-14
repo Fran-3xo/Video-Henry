@@ -6,7 +6,8 @@ export const UserActionTypes = {
     GET_USUARIOS: "GET_USUARIOS",
     SEARCH_USUARIOS: "SEARCH_USUARIOS",
     FAIL: "FAIL",
-    CLOSE_USER_ALERT:"CLOSE_USER_ALERT"
+    CLOSE_USER_ALERT:"CLOSE_USER_ALERT",
+    POSTING_DROPPING_USERS: "POSTING_DROPPING_USERS"
     }
 export const closeUserAlert = ()=>{
     return{

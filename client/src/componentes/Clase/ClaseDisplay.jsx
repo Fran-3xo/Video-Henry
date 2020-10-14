@@ -17,6 +17,7 @@ export default function ClaseDisplay(){
         return () =>{
             dispatch(cleanVideo());
         }
+        // eslint-disable-next-line
     },[])
     useEffect(()=>{
         if (!!video_id) dispatch(getVideo(video_id)); // eslint-disable-next-line

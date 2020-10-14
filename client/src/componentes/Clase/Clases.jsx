@@ -15,6 +15,7 @@ export default function Modulo(props) {
     const {clases: {clases, pags, ActionType, limit_show, currents, fetching_videos}} = useSelector(store => store);
     useEffect(() =>{
         return () => dispatch(cleanVideos());
+        // eslint-disable-next-line
     },[])
     useEffect(()=>{
         if(!!modulo)dispatch(getClasesByModulo(modulo)); 
@@ -22,11 +23,10 @@ export default function Modulo(props) {
         // eslint-disable-next-line
     },[query, modulo]);
     const seeMore = () => {
-        if (ActionType === "GET_MODULO")
-        dispatch(getClasesByModulo(modulo,(Math.ceil(clases.length / 48) + 1)))
-        else {
-            dispatch(searchVideos(query,(Math.ceil(clases.length / 48) + 1)))
-        }
+        if (ActionType === "GET_MODULO" && !!modulo)
+            dispatch(getClasesByModulo(modulo, pags + 1, limit_show))
+        else if(!!query) dispatch(searchVideos(query, pags + 1, limit_show))
+    
     }
 
     if(clases === null) return(

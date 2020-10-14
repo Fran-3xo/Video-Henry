@@ -8,7 +8,6 @@ import ForwardIcon from '@material-ui/icons/ArrowForwardIos'
 import {InputBase} from '@material-ui/core';
 import {Search} from "@material-ui/icons"
 
-
 export const TablaAlumnos = () => {
 const [query, setQuery] = useState("");
 const {user: {usuarios, pag, pags, limit, ActionType}} = useSelector(store  => store);
@@ -53,6 +52,7 @@ const nextPag = () => {
 }
 return (
         <div className={styles.alumnos}>
+        
     <TableContainer component={Paper}>
         <Table>
             <TableHead>

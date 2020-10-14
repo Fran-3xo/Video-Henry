@@ -40,7 +40,6 @@ export default function Home() {
     return (
         <div className={classes.mainContainer}>
             <Container >
-                <Typography variant="h3">Videos</Typography>
                 <Grid className={classes.contenedor} container spacing={3}>
                     {images.map((image) =>(
                         <Grid item key={image} xs={8} sm={10} md={5}>
