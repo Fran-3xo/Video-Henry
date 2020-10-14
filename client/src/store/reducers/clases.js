@@ -16,6 +16,22 @@ const initialState = {
 
 export const clasesReducer = (state = initialState, action) => {
     switch (action.type) {
+        case ModuloActionTypes.CLEAN_VIDEOS:
+            return{
+                ...state,
+                clases:null,
+            }
+        case ModuloActionTypes.CLEAN_VIDEO:
+            return{
+                ...state,
+                video:"pending",
+            }
+        case ModuloActionTypes.FETCHING_VIDEOS:
+            return{
+                ...state,
+                fetching_videos: action.payload,
+                clases: null,
+            }
         case ModuloActionTypes.GET_MODULO:
             return {
                 ...state,

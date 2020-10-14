@@ -9,8 +9,21 @@ export const ModuloActionTypes = {
     SEARCH_VIDEOS_ADMIN: "SEARCH_VIDEOS_ADMIN",
     DROP_VIDEO: "DROP_VIDEO",
     ERROR_VIDEO_ACTION : "ERROR_VIDEO_ACTION",
-    CLOSE_ALERTS : "CLOSE_ALERT"
+    CLOSE_ALERTS : "CLOSE_ALERTS",
+    FETCHING_VIDEOS: "FETCHING_VIDEOS",
+    CLEAN_VIDEOS:"CLEAN_VIDEOS",
+    CLEAN_VIDEO:"CLEAN_VIDEO"
 };
+export const cleanVideos = () =>{
+    return {
+        type: ModuloActionTypes.CLEAN_VIDEOS
+    }
+}
+export const cleanVideo = () =>{
+    return {
+        type: ModuloActionTypes.CLEAN_VIDEO
+    }
+}
 export const errorVideoAction = (error) => {
     return {
         type: ModuloActionTypes.ERROR_VIDEO_ACTION,
