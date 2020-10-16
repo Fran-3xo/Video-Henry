@@ -24,22 +24,28 @@ export const errUserAction = (err) => {
     }
 }
     //crea un alumno
-    export const postAlumno = (users) => {
-        return dispatch => {
-            return axios.post (REACT_APP_API_URL + "/alumnos/agregar", {
-                users,
-            },{withCredentials:true}).then(res => {
-                    dispatch({
-                        type: alumnosActionTypes.POST_ALUMNO,
-                    });
-                    dispatch(getUsuarios())
-            }).catch(err => dispatch(errUserAction(err.response.data)))
-        }
+export const postAlumno = (users) => {
+    return dispatch => {
+        dispatch({
+            type: "POSTING_DROPPING_USERS",
+        })
+        axios.post (REACT_APP_API_URL + "/alumnos/agregar", {
+            users,
+        },{withCredentials:true}).then(res => {
+                dispatch({
+                    type: alumnosActionTypes.POST_ALUMNO,
+                });
+                dispatch(getUsuarios())
+        }).catch(err => dispatch(errUserAction(err.response.data)))
     }
+}
     //borra un alumno
 export const dropUser = (users) => {
     return dispatch => {
-        return axios.put(REACT_APP_API_URL + "/alumnos/delete", {
+        dispatch({
+            type: "POSTING_DROPPING_USERS",
+        })
+        axios.put(REACT_APP_API_URL + "/alumnos/delete", {
             users,
         },{withCredentials: true}).then(res => {
             dispatch({
@@ -52,7 +58,10 @@ export const dropUser = (users) => {
 
 export const postDirector = (users) => {
     return dispatch => {
-        return axios.post (REACT_APP_API_URL + "/alumnos/agregar/director", {
+        dispatch({
+            type: "POSTING_DROPPING_USERS",
+        })
+        axios.post (REACT_APP_API_URL + "/alumnos/agregar/director", {
             users,
         },{withCredentials:true}).then(res => {
                 dispatch({

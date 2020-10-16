@@ -8,7 +8,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
-import {useSelector} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
+import {closeUserAlert} from "../../store/actions/login";
 
 const useStyles = makeStyles({
     root: {
@@ -33,12 +34,13 @@ const useStyles = makeStyles({
 
 export default function Login(){
     const classes = useStyles();
+    const dispatch = useDispatch();
     const {REACT_APP_API_URL} = process.env
-    const {user:{failure_login}} = useSelector(store => store);
+    const {user:{logged}} = useSelector(store => store);
     return(
         <div className={styles.login}>
-          <Snackbar open={failure_login} anchorOrigin={{ vertical: "top", horizontal: "center"}}>
-            <Alert severity="error" variant="filled">Usuario NO autorizado</Alert>
+          <Snackbar open={typeof logged==="string"} anchorOrigin={{ vertical: "top", horizontal: "center"}}>
+            <Alert severity="error" variant="filled" onClose={() => dispatch(closeUserAlert())}>Usuario No autorizado</Alert>
           </Snackbar>
           <Card className={classes.root} variant="outlined">
           <CardContent>

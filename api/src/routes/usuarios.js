@@ -14,8 +14,8 @@ function isAdmin(req, res, next){
   return res.sendStatus(403);
 }
 server.get("/github/login", passport.authenticate("github", { scope: ["user:email"] }));
-server.get("/github/cb", passport.authenticate("github", { failureRedirect: CLIENT_URL + '/github_login' }), (req, res) => {
-	res.redirect(CLIENT_URL + "/github_login");
+server.get("/github/cb", passport.authenticate("github"), (req, res) => {
+	res.redirect(CLIENT_URL + "/Home");
 });
 
 server.get("/users/:limit/:pag", isAuth, isAdmin, (req, res, next) =>{

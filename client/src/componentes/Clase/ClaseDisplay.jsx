@@ -4,7 +4,7 @@ import { Skeleton } from '@material-ui/lab'
 import ArrowBack from '@material-ui/icons/ArrowBack';
 import { useSelector } from 'react-redux';
 import {useDispatch} from "react-redux";
-import {getVideo} from "../../store/actions/clases";
+import {getVideo, cleanVideo} from "../../store/actions/clases";
 import { useParams, useHistory, Link } from 'react-router-dom';
 import useStyles from './Clases.styles'
 export default function ClaseDisplay(){
@@ -13,20 +13,33 @@ export default function ClaseDisplay(){
     const classes = useStyles();
     const history = useHistory();
     const {clases: {video}} = useSelector(store => store);
-    const renderVideo = (video) =>{
-        if(video === "pending") return (
-            <Card className={classes.media}>
-                <CardHeader title={<Skeleton  height={50}/>} subheader={<Skeleton  height={20}/>}/>
-                <CardMedia component={Skeleton} height={480}/>
-            </Card>
+    useEffect(() => {
+        return () =>{
+            dispatch(cleanVideo());
+        }
+        // eslint-disable-next-line
+    },[])
+    useEffect(()=>{
+        if (!!video_id) dispatch(getVideo(video_id)); // eslint-disable-next-line
+    },[video_id])
+    if(video === "pending") return (
+            <div className={classes.contenedor_video}>
+                <Card className={classes.media}>
+                    <CardHeader title={<Skeleton  height={50}/>} subheader={<Skeleton  height={20}/>}/>
+                    <CardMedia component={Skeleton} height={480}/>
+                </Card>
+            </div>
         );
-        if(video === null) return (
+    if(video === null) return (
+        <div className={classes.contenedor_video}>
             <Card className={classes.media}>
                 <CardHeader title={"404 Video no existe el video"} subheader={<Link to="/Home">Volver</Link>}/>
                 <CardMedia component={Skeleton} height={480}/>
             </Card>
-        );
-        return (
+        </div>
+    );
+    return (
+        <div className={classes.contenedor_video}>
             <Card className={classes.media}>
                 <CardHeader 
                     title={video.titulo} 
@@ -44,14 +57,6 @@ export default function ClaseDisplay(){
                 />
                 <CardMedia component="div" dangerouslySetInnerHTML={{__html:video.iframe}}/>
             </Card>
-        )
-    }
-    useEffect(()=>{
-        if (!!video_id) dispatch(getVideo(video_id)); // eslint-disable-next-line
-    },[video_id])
-    return (
-        <div className={classes.contenedor_video}>
-            {renderVideo(video)}
         </div>
     )
 }

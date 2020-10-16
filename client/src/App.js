@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import './App.css';
-import {Route, Redirect, useHistory, } from "react-router-dom";
+import {Route, Redirect} from "react-router-dom";
 import NavBar from "./componentes/NavBar/NavBar";
 import Admin from "./componentes/Admin/Admin";
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
@@ -28,19 +28,25 @@ const theme = createMuiTheme({
     }
   }
 });
-const GithubLogin = () => {
+const PrivateRoute = (props) =>{
+  const {user:{logged, user}} = useSelector(store => store);
   const dispatch = useDispatch();
-  const history = useHistory();
+  const status = typeof logged;
   useEffect(()=>{
-    dispatch(logIn()).then(() => history.push("/Home")) // eslint-disable-next-line
+    dispatch(logIn())
+    // eslint-disable-next-line
   },[])
-  return(<></>)
+  if(status === "number") return (<h1 style={{marginTop:"10rem"}}>Logging...</h1>)
+  if(status === "boolean"){
+    if(props.Admin && user.rol==="director") return(props.children)
+    if(!props.Admin) return(props.children)
+    return(<Redirect to={props.redirect}/>)
+  }
+  if(status === "string") return (<Redirect to={props.redirect}/>)
+  return (<Redirect to={props.redirect}/>)
+
 }
 function App() {
-  const {user:{user}} = useSelector(store => store);
-  useEffect(()=>{
-    localStorage.setItem("user", !!user?JSON.stringify(user):JSON.stringify(""));
-  },[user])
   return (
     <div className="App">
       <ThemeProvider theme={theme}>
@@ -51,22 +57,29 @@ function App() {
           <Login/>
         </Route>
         <Route path="/Admin">
-          {!!user && user.rol==="director"?<Admin/>:<Redirect to="/"/>}
-        </Route>
-        <Route exact path="/github_login">
-          <GithubLogin/>
+          <PrivateRoute Admin redirect="/">
+            <Admin/>
+          </PrivateRoute>
         </Route>
         <Route exact path="/Home">
-            {!!user?<Home/>:<Redirect to="/"/>}
+            <PrivateRoute redirect="/">
+              <Home/>
+            </PrivateRoute>
         </Route>
         <Route exact path="/categoria/:modulo">
-           {!!user?<Clases/>:<Redirect to="/"/>}
+           <PrivateRoute redirect="/">
+              <Clases/>
+            </PrivateRoute>
         </Route>
         <Route path="/search/:query">
-           {!!user?<Clases/>:<Redirect to="/"/>}
+           <PrivateRoute redirect="/">
+              <Clases/>
+            </PrivateRoute>
         </Route>
         <Route exact path="/video/:video_id">
-           {!!user?<ClaseDisplay/>:<Redirect to="/"/>}
+           <PrivateRoute redirect="/">
+              <ClaseDisplay/>
+            </PrivateRoute>
         </Route>
         <Route path="/About">
           <AboutUs/>

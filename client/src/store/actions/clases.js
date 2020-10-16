@@ -9,9 +9,22 @@ export const ModuloActionTypes = {
     SEARCH_VIDEOS_ADMIN: "SEARCH_VIDEOS_ADMIN",
     DROP_VIDEO: "DROP_VIDEO",
     ERROR_VIDEO_ACTION : "ERROR_VIDEO_ACTION",
-    CLOSE_ALERTS : "CLOSE_ALERT",
-    FETCHING_VIDEOS: "FETCHING_VIDEOS"
+    CLOSE_ALERTS : "CLOSE_ALERTS",
+    FETCHING_VIDEOS: "FETCHING_VIDEOS",
+    CLEAN_VIDEOS:"CLEAN_VIDEOS",
+    CLEAN_VIDEO:"CLEAN_VIDEO",
+    POSTING_DROPPING_VIDEO: "POSTING_DROPPING_VIDEO"
 };
+export const cleanVideos = () =>{
+    return {
+        type: ModuloActionTypes.CLEAN_VIDEOS
+    }
+}
+export const cleanVideo = () =>{
+    return {
+        type: ModuloActionTypes.CLEAN_VIDEO
+    }
+}
 export const errorVideoAction = (error) => {
     return {
         type: ModuloActionTypes.ERROR_VIDEO_ACTION,
@@ -57,6 +70,9 @@ export const getVideos = (pag=1,limit=10) =>{
 }
 export const postClase = (clase) => {
     return (dispatch) => {
+        dispatch({
+            type:ModuloActionTypes.POSTING_DROPPING_VIDEO
+        })
         return axios.post(`${REACT_APP_API_URL}/clase/`,clase,{ withCredentials: true })
             .then(() => {
                 dispatch({
@@ -81,6 +97,9 @@ export const getVideo = (id) =>{
 }
 export const dropVideos = (videos) => {
     return (dispatch) => {
+        dispatch({
+            type:ModuloActionTypes.POSTING_DROPPING_VIDEO
+        })
         return axios.put(`${REACT_APP_API_URL}/clase/delete`,videos,{ withCredentials: true })
             .then(() => {
                 dispatch({

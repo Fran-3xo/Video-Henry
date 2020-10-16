@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import s from "./registrarse.module.css"
-import { Button, TextField, Snackbar } from '@material-ui/core';
+import { Button, TextField, Snackbar, Typography } from '@material-ui/core';
 import {Alert} from '@material-ui/lab';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
@@ -8,7 +8,7 @@ import { Chip } from '@material-ui/core';
 import {postAlumno} from "../../store/actions/alumnos"
 import {useDispatch, useSelector} from "react-redux";
 import { dropUser, postDirector, closeAlerts} from "../../store/actions/alumnos"
-
+import Confirm from "../Admin/Confirm";
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -47,6 +47,8 @@ export default function AddAlumno () {
     const classes = useStyles();
     const {alumnos: {success, success_msg, err_msg}} = useSelector(store => store);
     const [alumnos, setAlumnos] = useState("");
+    const [confirm, setConfirm] = useState(false);
+    const [confirmAdmin, setConfirmAdmin] = useState(false);
     const [error, setError] = useState({
         touched:false,
         msg:""
@@ -64,11 +66,11 @@ export default function AddAlumno () {
             setAlumnos("");
         }else setError({...error, msg:"Debe ingresar usuario/s"})
     }
-    const handleDirector = (e) => {
-        e.preventDefault();
+    const handleDirector = () => {
         if(!error.msg && !!alumnos.trim().match(regex) && !!alumnos.trim().match(regex).length){
             dispatch(postDirector(alumnos.match(regex)))
             setAlumnos("");
+            setConfirmAdmin(false);
         }else setError({...error, msg:"Debe ingresar usuario/s"})
     }
     const handleError = (e) => {
@@ -76,15 +78,31 @@ export default function AddAlumno () {
         else if(!alumnos.trim().match(regex)) setError({...error, msg:"Debe ingresar un usuario de GitHub ex: atralice"})
         else if (!alumnos.trim().match(regex).length) setError({...error, msg:"Debe separar usuarios por Enter"})
     }
-    const handleDelete =  (e) => {
-        e.preventDefault();
+    const handleDelete =  () => {
         if(!error.msg && !!alumnos.trim().match(regex) && !!alumnos.trim().match(regex).length){
             dispatch(dropUser(alumnos.match(regex)))
             setAlumnos("");
+            setConfirm(false);
         }else setError({...error, msg:"Debe ingresar usuario/s"})
             
         
     };
+    const handleConfirm = (e) =>{
+        e.preventDefault();
+        setConfirm(!!alumnos.trim().match(regex).length)
+    }
+    const handleConfirmAdmin = (e) =>{
+        e.preventDefault();
+        setConfirmAdmin(!!alumnos.trim().match(regex).length)
+    }
+    const CloseConfirm = () =>{
+        setConfirm(false);
+        setAlumnos("");
+    }
+    const CloseConfirmAdmin = () =>{
+        setConfirmAdmin(false);
+        setAlumnos("");
+    }
     return (
         <div>
             <Snackbar open={!!err_msg} anchorOrigin={{vertical:"top", horizontal:"center"}}>
@@ -93,6 +111,16 @@ export default function AddAlumno () {
             <Snackbar open={success} anchorOrigin={{vertical:"top", horizontal:"center"}}>
                 <Alert variant="filled" severity="success" onClose={() => dispatch(closeAlerts())}>{success_msg}</Alert>
             </Snackbar>
+            <Confirm title="Asignar Administración" severity="warning" open={confirmAdmin} decline={() => CloseConfirmAdmin()} accept={() => handleDirector()}>
+                <Typography variant="body1">
+                    Se asignara/n {!!alumnos.trim().match(regex) && alumnos.trim().match(regex).length} Disrector/res. ¿Desea continuar?
+                </Typography>
+            </Confirm>
+            <Confirm title="Eliminar Usuarios" severity="danger" open={confirm} decline={() => CloseConfirm()} accept={() => handleDelete()}>
+                <Typography variant="body1">
+                    Se eliminara/n {!!alumnos.trim().match(regex) && alumnos.trim().match(regex).length} usuarios/s. ¿Desea continuar?
+                </Typography>
+            </Confirm>
             <h3>Agregá o elimina</h3>
             <Container component="main" maxWidth="xs">
                 <form className={classes.form} noValidate>
@@ -131,7 +159,7 @@ export default function AddAlumno () {
                             fullWidth
                             variant="contained"
                             className={classes.submit}
-                            onClick= {(e)=> handleDelete(e)}
+                            onClick= {(e)=> handleConfirm(e)}
                             >
                             Eliminar Usuarios
                         </Button>
@@ -140,9 +168,9 @@ export default function AddAlumno () {
                             fullWidth
                             variant="contained"
                             className={classes.submit}
-                            onClick= {(e) => handleDirector(e)}
+                            onClick= {(e) => handleConfirmAdmin(e)}
                             >
-                            Agregar administrador
+                            Agregar director
                         </Button>
                 </form>
             </Container>

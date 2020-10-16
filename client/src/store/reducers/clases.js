@@ -18,10 +18,21 @@ const initialState = {
 
 export const clasesReducer = (state = initialState, action) => {
     switch (action.type) {
+        case ModuloActionTypes.CLEAN_VIDEOS:
+            return{
+                ...state,
+                clases:null,
+            }
+        case ModuloActionTypes.CLEAN_VIDEO:
+            return{
+                ...state,
+                video:"pending",
+            }
         case ModuloActionTypes.FETCHING_VIDEOS:
             return{
                 ...state,
-                fetching_videos: action.payload
+                fetching_videos: action.payload,
+                clases: null,
             }
         case ModuloActionTypes.GET_MODULO:
             return {
@@ -33,6 +44,15 @@ export const clasesReducer = (state = initialState, action) => {
                 fetching_videos: false,
                 limit_show: action.payload.limit
                 
+            }
+        case ModuloActionTypes.POSTING_DROPPING_VIDEO:
+            return{
+                ...state,
+                videos:null,
+                pag:1,
+                pags:1,
+                limit:10,
+                ActionType:"",
             }
         case ModuloActionTypes.POST_CLASE:
             return {
